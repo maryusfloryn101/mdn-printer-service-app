@@ -2,6 +2,7 @@
 # Construiește installerul Windows (NSIS) pe un runner Linux din GitHub Actions.
 # Python portabil pentru Windows (python-build-standalone) + pachetele pentru win_amd64.
 set -euo pipefail
+trap 'echo "::error::ci_build.sh linia $LINENO: $BASH_COMMAND"' ERR
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 B="$ROOT/build/win"; ST="$B/stage"
 VERSION=$(sed -n 's/^VERSION = "\(.*\)"/\1/p' "$ROOT/app/backend/config.py")
