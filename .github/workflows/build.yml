@@ -54,7 +54,7 @@ jobs:
           for i in 1 2 3 4 5; do
             gh release view "$V" >/dev/null 2>&1 && break
             gh release create "$V" --target "$GITHUB_SHA" --title "MDN Printer Service $V" \
-              --notes "Instalatoare pentru Windows, macOS (Apple Silicon și Intel) și Linux." && break
+              --notes-file packaging/NOTE_VERSIUNE.md && break
             sleep $((RANDOM % 10 + 5))
           done
           gh release upload "$V" dist/*.dmg dist/*.AppImage --clobber 2>/dev/null || gh release upload "$V" $(ls dist/*.dmg dist/*.AppImage 2>/dev/null) --clobber
@@ -79,7 +79,7 @@ jobs:
           for i in 1 2 3 4 5; do
             gh release view "$V" >/dev/null 2>&1 && break
             gh release create "$V" --target "$GITHUB_SHA" --title "MDN Printer Service $V" \
-              --notes "Instalatoare pentru Windows, macOS (Apple Silicon și Intel) și Linux." && break
+              --notes-file packaging/NOTE_VERSIUNE.md && break
             sleep $((RANDOM % 10 + 5))
           done
           gh release upload "$V" dist/MDN-Printer-Service-Setup.exe --clobber
