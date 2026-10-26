@@ -1,0 +1,267 @@
+﻿CONTRACTUL DE LICENȚĂ MDN PRINTER SERVICE
+
+Ultima actualizare: 25.10.2026
+
+Acest contract se încheie între Madena Digital SRL („Furnizorul”) și persoana
+care instalează sau utilizează aplicația MDN Printer Service („Utilizatorul”).
+Prezentul contract se aplică Cheii de activare și serviciilor asociate;
+utilizarea codului aplicației este guvernată exclusiv de licența EUPL-1.2.
+
+1. Codul sursă și licența open-source
+
+Codul aplicației este distribuit sub licența European Union Public Licence
+v1.2 (EUPL-1.2)
+(https://interoperable-europe.ec.europa.eu/collection/eupl/eupl-text-eupl-12).
+Drepturile acordate de EUPL-1.2 (utilizare, studiere, modificare și
+redistribuire a codului, în condițiile acesteia) nu sunt restrânse de
+prezentul contract. Codul sursă este disponibil liber la
+https://printer.mdndigital.ro/download/MDN-Printer-Service-sursa.zip.
+
+2. Ce se achiziționează
+
+Prin plata Licenței, Utilizatorul primește o Cheie de activare și serviciile
+asociate furnizate de Madena Digital SRL:
+
+- activarea funcțiilor plătite pe un calculator, prin serverul de licențe al
+  Furnizorului;
+
+- actualizări ale bazei de modele;
+
+- pașii detaliați ai ghidurilor de service Canon și Brother și asistentul
+  Canon, livrați de pe serverul de licențe;
+
+- asistență tehnică prin e-mail;
+
+- transferul gratuit al Licenței pe un alt calculator, la cerere.
+
+3. Condițiile Cheii de activare
+
+- O Cheie de activare este valabilă pentru un singur calculator.
+
+- Cheia este personală și nu poate fi publicată, revândută sau partajată fără
+  acordul Furnizorului.
+
+- Aplicația verifică online valabilitatea Cheii aproximativ o dată pe
+  săptămână; resetarea și citirea imprimantei nu necesită internet între
+  verificări. Dacă verificarea nu reușește timp de 7 zile, funcțiile plătite
+  se suspendă până la următoarea conexiune la internet.
+
+- Furnizorul poate revoca o Cheie folosită abuziv (de exemplu, activată pe mai
+  multe calculatoare fără drept), după notificarea prealabilă a titularului și
+  acordarea unui termen de 15 zile pentru remediere. Cheile publicate pot fi
+  revocate imediat, cu notificarea titularului.
+
+- Dacă serviciul de licențe ar înceta definitiv, Furnizorul va pune la
+  dispoziție, gratuit, o versiune a aplicației care funcționează fără
+  verificare online.
+
+4. Utilizarea corectă
+
+- Recomandăm ca resetarea contoarelor să fie efectuată numai după înlocuirea
+  sau curățarea tamponului de cerneală uzată ori după montarea unui recipient
+  extern.
+
+- Aplicația salvează automat un backup al memoriei înainte de orice
+  modificare. Utilizatorul păstrează aceste fișiere pentru o eventuală
+  restaurare.
+
+- Modelele marcate „neverificat” au parametri preluați dintr-o bază de date de
+  service și nu au fost testate de Furnizor pe un exemplar real.
+
+- Intervenția asupra contoarelor de service poate afecta garanția oferită de
+  producătorul imprimantei.
+
+- Ghidurile pentru Canon și Brother sunt informative; programele terțe
+  menționate nu sunt furnizate de Furnizor.
+
+5. Datele prelucrate
+
+Pentru activare, aplicația transmite Cheia, un identificator ireversibil al
+calculatorului, versiunea aplicației și adresa IP. Datele despre clienții și
+intervențiile Utilizatorului rămân exclusiv pe calculatorul acestuia. Detalii
+în Politica de confidențialitate
+(https://printer.mdndigital.ro/confidentialitate.html).
+
+6. Garanții și răspundere
+
+Utilizatorii consumatori beneficiază de drepturile prevăzute de Ordonanța de
+urgență a Guvernului nr. 141/2021 privind conformitatea conținutului digital.
+În rest, în limitele permise de lege și de EUPL-1.2, aplicația se furnizează
+„ca atare”. Furnizorul nu răspunde pentru daunele rezultate din nerespectarea
+instrucțiunilor, din utilizarea pe modele necompatibile sau din defecțiuni
+preexistente ale imprimantei. Aceste limitări nu exclud răspunderea pentru
+prejudiciile cauzate cu intenție sau din culpă gravă.
+
+7. Componente terțe
+
+- epson_print_conf (Ircama), EUPL-1.2: comunicarea cu imprimantele Epson.
+
+- Date suplimentare de modele Epson derivate din proiectul ez-reset (CiRIP),
+  GNU AGPL-3.0; fișierul derivat app/data/epson_extra.json este distribuit sub
+  aceeași licență.
+
+- Python (Python Software Foundation, licența PSF) și biblioteci open-source
+  (pysnmp, pyusb, pywebview, fpdf2, Pillow, cryptography, PyYAML și altele),
+  fiecare sub licența proprie, inclusă în folderul aplicației
+  (app\lib\*.dist-info).
+
+- Fontul Manrope, SIL Open Font License 1.1.
+
+Epson, Canon și Brother sunt mărci ale proprietarilor respectivi; Furnizorul
+nu este afiliat acestora.
+
+8. Încetarea
+
+Utilizatorul poate dezinstala aplicația oricând. Drepturile asociate Cheii
+încetează dacă aceasta este revocată pentru utilizare abuzivă. Drepturile
+acordate de EUPL-1.2 asupra codului rămân aplicabile conform acelei licențe.
+
+9. Legea aplicabilă
+
+Contractul este guvernat de legea română. Consumatorii din alte state membre
+ale Uniunii Europene beneficiază și de protecția dispozițiilor imperative ale
+legii statului de reședință. Aspectele comerciale ale achiziției sunt
+reglementate de Termenii și condițiile
+(https://printer.mdndigital.ro/termeni.html) site-ului.
+
+10. Contact
+
+Madena Digital SRL, [în curs de înregistrare], CUI [în curs de înregistrare],
+e-mail service@mdndigital.ro.
+
+==============================================================================
+ENGLISH VERSION (informative; the Romanian version prevails)
+==============================================================================
+
+MDN PRINTER SERVICE LICENCE AGREEMENT
+
+Last updated: 25.10.2026
+
+This agreement is concluded between Madena Digital SRL (the “Supplier”) and
+the person who installs or uses the MDN Printer Service application (the
+“User”). This agreement applies to the Activation Key and the associated
+services; use of the application code is governed exclusively by the EUPL-1.2
+licence.
+
+1. Source code and open-source licence
+
+The code of the application is distributed under the European Union Public
+Licence v1.2 (EUPL-1.2)
+(https://interoperable-europe.ec.europa.eu/collection/eupl/eupl-text-eupl-12).
+The rights granted by the EUPL-1.2 (use, study, modification and
+redistribution of the code, under its terms) are not restricted by this
+agreement. The source code is freely available at
+https://printer.mdndigital.ro/download/MDN-Printer-Service-sursa.zip.
+
+2. What is purchased
+
+By paying for the Licence, the User receives an Activation Key and the
+associated services provided by Madena Digital SRL:
+
+- activation of the paid features on one computer, via the Supplier’s licence
+  server;
+
+- updates to the model database;
+
+- the detailed steps of the Canon and Brother service guides and the Canon
+  assistant, delivered from the licence server;
+
+- technical support by e-mail;
+
+- free transfer of the Licence to another computer, on request.
+
+3. Activation Key conditions
+
+- One Activation Key is valid for a single computer.
+
+- The Key is personal and may not be published, resold or shared without the
+  Supplier’s consent.
+
+- The application verifies the validity of the Key online approximately once a
+  week; resetting and reading the printer do not require internet access
+  between verifications. If verification fails for 7 days, the paid features
+  are suspended until the next internet connection.
+
+- The Supplier may revoke a Key that is used abusively (for example, activated
+  on several computers without entitlement), after giving the holder prior
+  notice and a period of 15 days to remedy the situation. Published Keys may
+  be revoked immediately, with notice to the holder.
+
+- Should the licensing service be permanently discontinued, the Supplier will
+  make available, free of charge, a version of the application that works
+  without online verification.
+
+4. Proper use
+
+- We recommend that counters be reset only after the waste ink pad has been
+  replaced or cleaned, or after an external waste ink container has been
+  fitted.
+
+- The application automatically saves a backup of the memory before any
+  modification. The User keeps these files for any subsequent restoration.
+
+- Models marked “unverified” have parameters taken from a service database and
+  have not been tested by the Supplier on an actual unit.
+
+- Intervening on service counters may affect the warranty provided by the
+  printer manufacturer.
+
+- The guides for Canon and Brother are informative; the third-party programs
+  mentioned are not supplied by the Supplier.
+
+5. Data processed
+
+For activation, the application transmits the Key, an irreversible computer
+identifier, the application version and the IP address. Data about the User’s
+customers and service interventions remain exclusively on the User’s computer.
+Details are set out in the Privacy Policy
+(https://printer.mdndigital.ro/en/confidentialitate.html).
+
+6. Warranties and liability
+
+Users who are consumers benefit from the rights provided for in Romanian
+Government Emergency Ordinance No. 141/2021 (OUG 141/2021) on the conformity
+of digital content. Otherwise, to the extent permitted by law and by the
+EUPL-1.2, the application is provided “as is”. The Supplier is not liable for
+damage resulting from failure to follow the instructions, from use on
+incompatible models or from pre-existing printer faults. These limitations do
+not exclude liability for damage caused intentionally or through gross
+negligence.
+
+7. Third-party components
+
+- epson_print_conf (Ircama), EUPL-1.2: communication with Epson printers.
+
+- Additional Epson model data derived from the ez-reset project (CiRIP), GNU
+  AGPL-3.0; the derived file app/data/epson_extra.json is distributed under
+  the same licence.
+
+- Python (Python Software Foundation, PSF licence) and open-source libraries
+  (pysnmp, pyusb, pywebview, fpdf2, Pillow, cryptography, PyYAML and others),
+  each under its own licence, included in the application folder
+  (app\lib\*.dist-info).
+
+- The Manrope font, SIL Open Font License 1.1.
+
+Epson, Canon and Brother are trademarks of their respective owners; the
+Supplier is not affiliated with them.
+
+8. Termination
+
+The User may uninstall the application at any time. The rights associated with
+the Key terminate if the Key is revoked for abusive use. The rights granted by
+the EUPL-1.2 in respect of the code remain applicable in accordance with that
+licence.
+
+9. Governing law
+
+The agreement is governed by Romanian law. Consumers in other Member States of
+the European Union also benefit from the protection of the mandatory
+provisions of the law of their state of residence. The commercial aspects of
+the purchase are governed by the website’s Terms and Conditions
+(https://printer.mdndigital.ro/en/termeni.html).
+
+10. Contact
+
+Madena Digital SRL, [registration in progress], CUI [registration in
+progress], e-mail service@mdndigital.ro.

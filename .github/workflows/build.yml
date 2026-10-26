@@ -1,0 +1,60 @@
+# Construiește automat MDN Printer Service pentru macOS (Apple Silicon și Intel) și Linux
+# și pune fișierele în pagina „Releases” a depozitului (vX.Y.Z, după backend/config.py).
+# Pornește manual, din fila Actions („Run workflow”), sau la fiecare etichetă v*.
+name: Build
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-14          # Apple Silicon
+          - runner: macos-15-intel    # Intel
+          - runner: ubuntu-22.04      # Linux
+    runs-on: ${{ matrix.runner }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Biblioteci de sistem (macOS)
+        if: runner.os == 'macOS'
+        run: brew install libusb
+      - name: Biblioteci de sistem (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libusb-1.0-0 libxcb-cursor0 libxkbcommon-x11-0 libxcb-icccm4 \
+            libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-shape0 libegl1 libfuse2
+          curl -sSL -o appimagetool https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool
+      - name: Dependențe
+        run: pip install -r requirements.txt
+      - name: Construire (macOS)
+        if: runner.os == 'macOS'
+        run: python packaging/build.py --libusb "$(brew --prefix libusb)/lib/libusb-1.0.0.dylib"
+      - name: Construire (Linux)
+        if: runner.os == 'Linux'
+        run: python packaging/build.py --libusb /usr/lib/x86_64-linux-gnu/libusb-1.0.so.0 --appimagetool ./appimagetool
+      - name: Publicare în Releases
+        shell: bash
+        run: |
+          V=v$(sed -n 's/^VERSION = "\(.*\)"/\1/p' app/backend/config.py)
+          for i in 1 2 3 4 5; do
+            gh release view "$V" >/dev/null 2>&1 && break
+            gh release create "$V" --target "$GITHUB_SHA" --title "MDN Printer Service $V" \
+              --notes "Instalatoare pentru macOS (Apple Silicon și Intel) și Linux." && break
+            sleep $((RANDOM % 10 + 5))
+          done
+          gh release upload "$V" dist/*.dmg dist/*.AppImage --clobber 2>/dev/null || gh release upload "$V" $(ls dist/*.dmg dist/*.AppImage 2>/dev/null) --clobber

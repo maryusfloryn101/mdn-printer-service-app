@@ -1,0 +1,638 @@
+{
+ "ro": {
+  "title": "Raport de service",
+  "no": "Nr.",
+  "client": "Client",
+  "printer": "Imprimantă",
+  "serial": "Nr. serie",
+  "fw": "firmware",
+  "waste": "Contoare de cerneală uzată",
+  "pad": "Tampon",
+  "before": "Înainte",
+  "after": "După",
+  "main": "Principal",
+  "borderless": "Fără margini",
+  "state": "Starea imprimantei",
+  "pages": "Pagini printate",
+  "scans": "Scanări",
+  "first": "Prima utilizare",
+  "conn": "Conexiune",
+  "work": "Lucrări efectuate",
+  "notes": "Observații",
+  "sig_tech": "Semnătură tehnician",
+  "sig_client": "Semnătură client",
+  "footer": "Raport generat cu MDN Printer Service, aplicație dezvoltată de Madena Digital SRL",
+  "kinds": {
+   "reset": [
+    "Citirea stării și salvarea unui backup al memoriei imprimantei.",
+    "Resetarea contoarelor de cerneală uzată și verificarea prin recitire."
+   ],
+   "temp_unlock": [
+    "Citirea stării imprimantei.",
+    "Deblocarea temporară a imprimantei (contoarele nu au fost modificate)."
+   ],
+   "check": [
+    "Citirea stării imprimantei, fără modificări."
+   ],
+   "guide": [
+    "Procedura de service urmată pas cu pas, conform ghidului din aplicație."
+   ],
+   "restore": [
+    "Restaurarea contoarelor dintr-un backup anterior."
+   ],
+   "canon_assist": []
+  },
+  "canon": {
+   "prep": "Pregătire verificată: tampon de cerneală uzată înlocuit sau curățat ori recipient extern montat.",
+   "svc_auto": "Intrarea în modul service a fost detectată automat (identificator USB {a} → {b}).",
+   "svc_manual": "Intrarea în modul service a fost confirmată manual de tehnician.",
+   "svc_none": "Intrarea în modul service nu a fost confirmată.",
+   "steps": "Procedura de resetare cu programul de service: {d} din {t} pași parcurși.",
+   "maint": "A fost deschisă fereastra de întreținere a driverului Canon (curățare, verificare duze, aliniere).",
+   "nowrite": "Aplicația MDN Printer Service nu a scris în memoria imprimantei."
+  }
+ },
+ "en": {
+  "title": "Service report",
+  "no": "No.",
+  "client": "Customer",
+  "printer": "Printer",
+  "serial": "Serial no.",
+  "fw": "firmware",
+  "waste": "Waste ink counters",
+  "pad": "Pad",
+  "before": "Before",
+  "after": "After",
+  "main": "Main",
+  "borderless": "Borderless",
+  "state": "Printer condition",
+  "pages": "Pages printed",
+  "scans": "Scans",
+  "first": "First use",
+  "conn": "Connection",
+  "work": "Work performed",
+  "notes": "Notes",
+  "sig_tech": "Technician signature",
+  "sig_client": "Customer signature",
+  "footer": "Report generated with MDN Printer Service, an app by Madena Digital SRL",
+  "kinds": {
+   "reset": [
+    "Read printer status and saved a backup of the printer memory.",
+    "Reset the waste ink counters and verified them by reading back."
+   ],
+   "temp_unlock": [
+    "Read printer status.",
+    "Temporarily unlocked the printer (counters unchanged)."
+   ],
+   "check": [
+    "Read printer status, no changes made."
+   ],
+   "guide": [
+    "Service procedure followed step by step, per the in-app guide."
+   ],
+   "restore": [
+    "Restored the counters from an earlier backup."
+   ],
+   "canon_assist": []
+  },
+  "canon": {
+   "prep": "Preparation checked: waste ink pad replaced or cleaned, or external tank fitted.",
+   "svc_auto": "Entry into service mode was detected automatically (USB identifier {a} → {b}).",
+   "svc_manual": "Entry into service mode was confirmed manually by the technician.",
+   "svc_none": "Entry into service mode was not confirmed.",
+   "steps": "Reset procedure with the service program: {d} of {t} steps completed.",
+   "maint": "The Canon driver maintenance window was opened (cleaning, nozzle check, alignment).",
+   "nowrite": "MDN Printer Service did not write to the printer memory."
+  }
+ },
+ "de": {
+  "title": "Servicebericht",
+  "no": "Nr.",
+  "client": "Kunde",
+  "printer": "Drucker",
+  "serial": "Seriennr.",
+  "fw": "Firmware",
+  "waste": "Resttintenzähler",
+  "pad": "Behälter",
+  "before": "Vorher",
+  "after": "Nachher",
+  "main": "Haupt",
+  "borderless": "Randlos",
+  "state": "Druckerzustand",
+  "pages": "Gedruckte Seiten",
+  "scans": "Scans",
+  "first": "Erste Verwendung",
+  "conn": "Verbindung",
+  "work": "Durchgeführte Arbeiten",
+  "notes": "Bemerkungen",
+  "sig_tech": "Unterschrift Techniker",
+  "sig_client": "Unterschrift Kunde",
+  "footer": "Bericht erstellt mit MDN Printer Service, einer Anwendung von Madena Digital SRL",
+  "kinds": {
+   "reset": [
+    "Auslesen des Status und Speichern eines Backups des Druckerspeichers.",
+    "Zurücksetzen der Resttintenzähler und Überprüfung durch erneutes Auslesen."
+   ],
+   "temp_unlock": [
+    "Auslesen des Druckerstatus.",
+    "Vorübergehende Entsperrung des Druckers (Zähler wurden nicht geändert)."
+   ],
+   "check": [
+    "Auslesen des Druckerstatus, ohne Änderungen."
+   ],
+   "guide": [
+    "Serviceverfahren Schritt für Schritt gemäß der Anleitung in der Anwendung durchgeführt."
+   ],
+   "restore": [
+    "Wiederherstellung der Zähler aus einem früheren Backup."
+   ],
+   "canon_assist": []
+  },
+  "canon": {
+   "prep": "Vorbereitung geprüft: Resttintenbehälter ersetzt oder gereinigt oder externer Tank angebracht.",
+   "svc_auto": "Der Wechsel in den Servicemodus wurde automatisch erkannt (USB-Kennung {a} → {b}).",
+   "svc_manual": "Der Wechsel in den Servicemodus wurde vom Techniker manuell bestätigt.",
+   "svc_none": "Der Wechsel in den Servicemodus wurde nicht bestätigt.",
+   "steps": "Rücksetzverfahren mit dem Serviceprogramm: {d} von {t} Schritten durchgeführt.",
+   "maint": "Das Wartungsfenster des Canon-Treibers wurde geöffnet (Reinigung, Düsentest, Ausrichtung).",
+   "nowrite": "MDN Printer Service hat nicht in den Druckerspeicher geschrieben."
+  }
+ },
+ "fr": {
+  "title": "Rapport de service",
+  "no": "N°",
+  "client": "Client",
+  "printer": "Imprimante",
+  "serial": "N° de série",
+  "fw": "firmware",
+  "waste": "Compteurs d'encre usagée",
+  "pad": "Tampon",
+  "before": "Avant",
+  "after": "Après",
+  "main": "Principal",
+  "borderless": "Sans marges",
+  "state": "État de l'imprimante",
+  "pages": "Pages imprimées",
+  "scans": "Numérisations",
+  "first": "Première utilisation",
+  "conn": "Connexion",
+  "work": "Travaux effectués",
+  "notes": "Observations",
+  "sig_tech": "Signature du technicien",
+  "sig_client": "Signature du client",
+  "footer": "Rapport généré avec MDN Printer Service, application développée par Madena Digital SRL",
+  "kinds": {
+   "reset": [
+    "Lecture de l'état et enregistrement d'une sauvegarde de la mémoire de l'imprimante.",
+    "Réinitialisation des compteurs d'encre usagée et vérification par relecture."
+   ],
+   "temp_unlock": [
+    "Lecture de l'état de l'imprimante.",
+    "Déblocage temporaire de l'imprimante (les compteurs n'ont pas été modifiés)."
+   ],
+   "check": [
+    "Lecture de l'état de l'imprimante, sans modifications."
+   ],
+   "guide": [
+    "Procédure de service suivie pas à pas, conformément au guide de l'application."
+   ],
+   "restore": [
+    "Restauration des compteurs à partir d'une sauvegarde antérieure."
+   ],
+   "canon_assist": []
+  },
+  "canon": {
+   "prep": "Préparation vérifiée : tampon d'encre usagée remplacé ou nettoyé, ou réservoir externe installé.",
+   "svc_auto": "Le passage en mode service a été détecté automatiquement (identifiant USB {a} → {b}).",
+   "svc_manual": "Le passage en mode service a été confirmé manuellement par le technicien.",
+   "svc_none": "Le passage en mode service n'a pas été confirmé.",
+   "steps": "Procédure de réinitialisation avec le programme de service : {d} étapes effectuées sur {t}.",
+   "maint": "La fenêtre de maintenance du pilote Canon a été ouverte (nettoyage, vérification des buses, alignement).",
+   "nowrite": "L'application MDN Printer Service n'a pas écrit dans la mémoire de l'imprimante."
+  }
+ },
+ "es": {
+  "title": "Informe de servicio",
+  "no": "N.º",
+  "client": "Cliente",
+  "printer": "Impresora",
+  "serial": "N.º de serie",
+  "fw": "firmware",
+  "waste": "Contadores de tinta residual",
+  "pad": "Almohadilla",
+  "before": "Antes",
+  "after": "Después",
+  "main": "Principal",
+  "borderless": "Sin márgenes",
+  "state": "Estado de la impresora",
+  "pages": "Páginas impresas",
+  "scans": "Escaneos",
+  "first": "Primer uso",
+  "conn": "Conexión",
+  "work": "Trabajos realizados",
+  "notes": "Observaciones",
+  "sig_tech": "Firma del técnico",
+  "sig_client": "Firma del cliente",
+  "footer": "Informe generado con MDN Printer Service, aplicación desarrollada por Madena Digital SRL",
+  "kinds": {
+   "reset": [
+    "Lectura del estado y guardado de una copia de seguridad de la memoria de la impresora.",
+    "Restablecimiento de los contadores de tinta residual y verificación mediante nueva lectura."
+   ],
+   "temp_unlock": [
+    "Lectura del estado de la impresora.",
+    "Desbloqueo temporal de la impresora (los contadores no se han modificado)."
+   ],
+   "check": [
+    "Lectura del estado de la impresora, sin cambios."
+   ],
+   "guide": [
+    "Procedimiento de servicio seguido paso a paso, según la guía de la aplicación."
+   ],
+   "restore": [
+    "Restauración de los contadores desde una copia de seguridad anterior."
+   ],
+   "canon_assist": []
+  },
+  "canon": {
+   "prep": "Preparación verificada: almohadilla de tinta residual sustituida o limpiada, o depósito externo instalado.",
+   "svc_auto": "La entrada en el modo de servicio se detectó automáticamente (identificador USB {a} → {b}).",
+   "svc_manual": "La entrada en el modo de servicio fue confirmada manualmente por el técnico.",
+   "svc_none": "La entrada en el modo de servicio no se confirmó.",
+   "steps": "Procedimiento de restablecimiento con el programa de servicio: {d} de {t} pasos completados.",
+   "maint": "Se abrió la ventana de mantenimiento del controlador Canon (limpieza, comprobación de inyectores, alineación).",
+   "nowrite": "La aplicación MDN Printer Service no escribió en la memoria de la impresora."
+  }
+ },
+ "it": {
+  "title": "Rapporto di servizio",
+  "no": "N.",
+  "client": "Cliente",
+  "printer": "Stampante",
+  "serial": "N. di serie",
+  "fw": "firmware",
+  "waste": "Contatori dell'inchiostro di scarto",
+  "pad": "Tampone",
+  "before": "Prima",
+  "after": "Dopo",
+  "main": "Principale",
+  "borderless": "Senza margini",
+  "state": "Stato della stampante",
+  "pages": "Pagine stampate",
+  "scans": "Scansioni",
+  "first": "Primo utilizzo",
+  "conn": "Connessione",
+  "work": "Interventi eseguiti",
+  "notes": "Note",
+  "sig_tech": "Firma del tecnico",
+  "sig_client": "Firma del cliente",
+  "footer": "Rapporto generato con MDN Printer Service, applicazione sviluppata da Madena Digital SRL",
+  "kinds": {
+   "reset": [
+    "Lettura dello stato e salvataggio di un backup della memoria della stampante.",
+    "Azzeramento dei contatori dell'inchiostro di scarto e verifica tramite rilettura."
+   ],
+   "temp_unlock": [
+    "Lettura dello stato della stampante.",
+    "Sblocco temporaneo della stampante (i contatori non sono stati modificati)."
+   ],
+   "check": [
+    "Lettura dello stato della stampante, senza modifiche."
+   ],
+   "guide": [
+    "Procedura di servizio seguita passo passo, secondo la guida dell'applicazione."
+   ],
+   "restore": [
+    "Ripristino dei contatori da un backup precedente."
+   ],
+   "canon_assist": []
+  },
+  "canon": {
+   "prep": "Preparazione verificata: tampone dell'inchiostro di scarto sostituito o pulito, oppure serbatoio esterno montato.",
+   "svc_auto": "L'ingresso nella modalità di servizio è stato rilevato automaticamente (identificatore USB {a} → {b}).",
+   "svc_manual": "L'ingresso nella modalità di servizio è stato confermato manualmente dal tecnico.",
+   "svc_none": "L'ingresso nella modalità di servizio non è stato confermato.",
+   "steps": "Procedura di azzeramento con il programma di servizio: {d} di {t} passaggi completati.",
+   "maint": "È stata aperta la finestra di manutenzione del driver Canon (pulizia, controllo degli ugelli, allineamento).",
+   "nowrite": "L'applicazione MDN Printer Service non ha scritto nella memoria della stampante."
+  }
+ },
+ "pt": {
+  "title": "Relatório de serviço",
+  "no": "N.º",
+  "client": "Cliente",
+  "printer": "Impressora",
+  "serial": "N.º de série",
+  "fw": "firmware",
+  "waste": "Contadores de tinta residual",
+  "pad": "Almofada",
+  "before": "Antes",
+  "after": "Depois",
+  "main": "Principal",
+  "borderless": "Sem margens",
+  "state": "Estado da impressora",
+  "pages": "Páginas impressas",
+  "scans": "Digitalizações",
+  "first": "Primeira utilização",
+  "conn": "Ligação",
+  "work": "Trabalhos efetuados",
+  "notes": "Observações",
+  "sig_tech": "Assinatura do técnico",
+  "sig_client": "Assinatura do cliente",
+  "footer": "Relatório gerado com MDN Printer Service, aplicação desenvolvida pela Madena Digital SRL",
+  "kinds": {
+   "reset": [
+    "Leitura do estado e gravação de uma cópia de segurança da memória da impressora.",
+    "Reposição dos contadores de tinta residual e verificação por nova leitura."
+   ],
+   "temp_unlock": [
+    "Leitura do estado da impressora.",
+    "Desbloqueio temporário da impressora (os contadores não foram alterados)."
+   ],
+   "check": [
+    "Leitura do estado da impressora, sem alterações."
+   ],
+   "guide": [
+    "Procedimento de serviço seguido passo a passo, conforme o guia da aplicação."
+   ],
+   "restore": [
+    "Restauro dos contadores a partir de uma cópia de segurança anterior."
+   ],
+   "canon_assist": []
+  },
+  "canon": {
+   "prep": "Preparação verificada: almofada de tinta residual substituída ou limpa, ou depósito externo instalado.",
+   "svc_auto": "A entrada no modo de serviço foi detetada automaticamente (identificador USB {a} → {b}).",
+   "svc_manual": "A entrada no modo de serviço foi confirmada manualmente pelo técnico.",
+   "svc_none": "A entrada no modo de serviço não foi confirmada.",
+   "steps": "Procedimento de reposição com o programa de serviço: {d} de {t} passos concluídos.",
+   "maint": "Foi aberta a janela de manutenção do controlador Canon (limpeza, verificação dos jatos, alinhamento).",
+   "nowrite": "A aplicação MDN Printer Service não escreveu na memória da impressora."
+  }
+ },
+ "pl": {
+  "title": "Raport serwisowy",
+  "no": "Nr",
+  "client": "Klient",
+  "printer": "Drukarka",
+  "serial": "Nr seryjny",
+  "fw": "oprogramowanie układowe",
+  "waste": "Liczniki zużytego tuszu",
+  "pad": "Pochłaniacz",
+  "before": "Przed",
+  "after": "Po",
+  "main": "Główny",
+  "borderless": "Bez marginesów",
+  "state": "Stan drukarki",
+  "pages": "Wydrukowane strony",
+  "scans": "Skany",
+  "first": "Pierwsze użycie",
+  "conn": "Połączenie",
+  "work": "Wykonane prace",
+  "notes": "Uwagi",
+  "sig_tech": "Podpis technika",
+  "sig_client": "Podpis klienta",
+  "footer": "Raport wygenerowany za pomocą MDN Printer Service, aplikacji opracowanej przez Madena Digital SRL",
+  "kinds": {
+   "reset": [
+    "Odczyt stanu i zapis kopii zapasowej pamięci drukarki.",
+    "Zresetowanie liczników zużytego tuszu i weryfikacja przez ponowny odczyt."
+   ],
+   "temp_unlock": [
+    "Odczyt stanu drukarki.",
+    "Tymczasowe odblokowanie drukarki (liczniki nie zostały zmienione)."
+   ],
+   "check": [
+    "Odczyt stanu drukarki, bez zmian."
+   ],
+   "guide": [
+    "Procedura serwisowa wykonana krok po kroku zgodnie z przewodnikiem w aplikacji."
+   ],
+   "restore": [
+    "Przywrócenie liczników z wcześniejszej kopii zapasowej."
+   ],
+   "canon_assist": []
+  },
+  "canon": {
+   "prep": "Przygotowanie sprawdzone: pochłaniacz tuszu wymieniony lub wyczyszczony albo zamontowany zewnętrzny zbiornik.",
+   "svc_auto": "Wejście w tryb serwisowy zostało wykryte automatycznie (identyfikator USB {a} → {b}).",
+   "svc_manual": "Wejście w tryb serwisowy zostało potwierdzone ręcznie przez technika.",
+   "svc_none": "Wejście w tryb serwisowy nie zostało potwierdzone.",
+   "steps": "Procedura resetowania w programie serwisowym: wykonano {d} z {t} kroków.",
+   "maint": "Otwarto okno konserwacji sterownika Canon (czyszczenie, test dysz, wyrównanie).",
+   "nowrite": "Aplikacja MDN Printer Service nie zapisywała danych w pamięci drukarki."
+  }
+ },
+ "nl": {
+  "title": "Servicerapport",
+  "no": "Nr.",
+  "client": "Klant",
+  "printer": "Printer",
+  "serial": "Serienr.",
+  "fw": "firmware",
+  "waste": "Afvalinkttellers",
+  "pad": "Kussen",
+  "before": "Voor",
+  "after": "Na",
+  "main": "Hoofd",
+  "borderless": "Randloos",
+  "state": "Toestand van de printer",
+  "pages": "Afgedrukte pagina’s",
+  "scans": "Scans",
+  "first": "Eerste gebruik",
+  "conn": "Verbinding",
+  "work": "Uitgevoerde werkzaamheden",
+  "notes": "Opmerkingen",
+  "sig_tech": "Handtekening technicus",
+  "sig_client": "Handtekening klant",
+  "footer": "Rapport gegenereerd met MDN Printer Service, applicatie ontwikkeld door Madena Digital SRL",
+  "kinds": {
+   "reset": [
+    "Status uitgelezen en back-up van het printergeheugen opgeslagen.",
+    "Afvalinkttellers gereset en gecontroleerd door opnieuw uit te lezen."
+   ],
+   "temp_unlock": [
+    "Status van de printer uitgelezen.",
+    "Printer tijdelijk ontgrendeld (tellers niet gewijzigd)."
+   ],
+   "check": [
+    "Status van de printer uitgelezen, zonder wijzigingen."
+   ],
+   "guide": [
+    "Serviceprocedure stap voor stap gevolgd volgens de handleiding in de applicatie."
+   ],
+   "restore": [
+    "Tellers hersteld uit een eerdere back-up."
+   ],
+   "canon_assist": []
+  },
+  "canon": {
+   "prep": "Voorbereiding gecontroleerd: inktabsorptiekussen vervangen of gereinigd, of externe opvangtank geplaatst.",
+   "svc_auto": "Het openen van de servicemodus is automatisch gedetecteerd (USB-identificatie {a} → {b}).",
+   "svc_manual": "Het openen van de servicemodus is handmatig bevestigd door de technicus.",
+   "svc_none": "Het openen van de servicemodus is niet bevestigd.",
+   "steps": "Resetprocedure met het serviceprogramma: {d} van {t} stappen doorlopen.",
+   "maint": "Het onderhoudsvenster van het Canon-stuurprogramma is geopend (reiniging, spuitmondjescontrole, uitlijning).",
+   "nowrite": "De applicatie MDN Printer Service heeft niet naar het printergeheugen geschreven."
+  }
+ },
+ "hu": {
+  "title": "Szervizjelentés",
+  "no": "Sz.",
+  "client": "Ügyfél",
+  "printer": "Nyomtató",
+  "serial": "Sorozatszám",
+  "fw": "firmware",
+  "waste": "Hulladékfesték-számlálók",
+  "pad": "Párna",
+  "before": "Előtte",
+  "after": "Utána",
+  "main": "Fő",
+  "borderless": "Szegély nélküli",
+  "state": "A nyomtató állapota",
+  "pages": "Nyomtatott oldalak",
+  "scans": "Szkennelések",
+  "first": "Első használat",
+  "conn": "Kapcsolat",
+  "work": "Elvégzett munkák",
+  "notes": "Megjegyzések",
+  "sig_tech": "Technikus aláírása",
+  "sig_client": "Ügyfél aláírása",
+  "footer": "A jelentés az MDN Printer Service alkalmazással készült, fejlesztő: Madena Digital SRL",
+  "kinds": {
+   "reset": [
+    "Az állapot kiolvasása és a nyomtató memóriájáról biztonsági másolat mentése.",
+    "A hulladékfesték-számlálók nullázása és ellenőrzése újraolvasással."
+   ],
+   "temp_unlock": [
+    "A nyomtató állapotának kiolvasása.",
+    "A nyomtató ideiglenes feloldása (a számlálók nem módosultak)."
+   ],
+   "check": [
+    "A nyomtató állapotának kiolvasása, módosítás nélkül."
+   ],
+   "guide": [
+    "A szervizeljárás lépésről lépésre, az alkalmazásban található útmutató szerint elvégezve."
+   ],
+   "restore": [
+    "A számlálók visszaállítása egy korábbi biztonsági másolatból."
+   ],
+   "canon_assist": []
+  },
+  "canon": {
+   "prep": "Előkészítés ellenőrizve: a hulladékfesték-párna kicserélve vagy megtisztítva, illetve külső gyűjtőtartály felszerelve.",
+   "svc_auto": "A szervizmódba lépés automatikusan észlelve (USB-azonosító: {a} → {b}).",
+   "svc_manual": "A szervizmódba lépést a technikus manuálisan erősítette meg.",
+   "svc_none": "A szervizmódba lépés nincs megerősítve.",
+   "steps": "Nullázási eljárás a szervizprogrammal: {t} lépésből {d} elvégezve.",
+   "maint": "Megnyílt a Canon illesztőprogram karbantartási ablaka (tisztítás, fúvókaellenőrzés, igazítás).",
+   "nowrite": "Az MDN Printer Service alkalmazás nem írt a nyomtató memóriájába."
+  }
+ },
+ "tr": {
+  "title": "Servis raporu",
+  "no": "No.",
+  "client": "Müşteri",
+  "printer": "Yazıcı",
+  "serial": "Seri no.",
+  "fw": "ürün yazılımı",
+  "waste": "Atık mürekkep sayaçları",
+  "pad": "Ped",
+  "before": "Önce",
+  "after": "Sonra",
+  "main": "Ana",
+  "borderless": "Kenarlıksız",
+  "state": "Yazıcının durumu",
+  "pages": "Basılan sayfa",
+  "scans": "Tarama",
+  "first": "İlk kullanım",
+  "conn": "Bağlantı",
+  "work": "Yapılan işlemler",
+  "notes": "Notlar",
+  "sig_tech": "Teknisyen imzası",
+  "sig_client": "Müşteri imzası",
+  "footer": "Bu rapor, Madena Digital SRL tarafından geliştirilen MDN Printer Service uygulamasıyla oluşturulmuştur",
+  "kinds": {
+   "reset": [
+    "Durumun okunması ve yazıcı belleğinin yedeğinin kaydedilmesi.",
+    "Atık mürekkep sayaçlarının sıfırlanması ve yeniden okunarak doğrulanması."
+   ],
+   "temp_unlock": [
+    "Yazıcı durumunun okunması.",
+    "Yazıcı kilidinin geçici olarak açılması (sayaçlar değiştirilmedi)."
+   ],
+   "check": [
+    "Yazıcı durumunun değişiklik yapılmadan okunması."
+   ],
+   "guide": [
+    "Servis prosedürü, uygulamadaki kılavuza göre adım adım uygulandı."
+   ],
+   "restore": [
+    "Sayaçların önceki bir yedekten geri yüklenmesi."
+   ],
+   "canon_assist": []
+  },
+  "canon": {
+   "prep": "Hazırlık kontrol edildi: atık mürekkep pedi değiştirildi veya temizlendi ya da harici hazne takıldı.",
+   "svc_auto": "Servis moduna giriş otomatik olarak algılandı (USB tanımlayıcısı {a} → {b}).",
+   "svc_manual": "Servis moduna giriş teknisyen tarafından manuel olarak onaylandı.",
+   "svc_none": "Servis moduna giriş onaylanmadı.",
+   "steps": "Servis programıyla sıfırlama prosedürü: {t} adımdan {d} adım tamamlandı.",
+   "maint": "Canon sürücüsünün bakım penceresi açıldı (temizleme, püskürtme ucu kontrolü, hizalama).",
+   "nowrite": "MDN Printer Service uygulaması yazıcının belleğine yazmadı."
+  }
+ },
+ "ru": {
+  "title": "Сервисный отчёт",
+  "no": "№",
+  "client": "Клиент",
+  "printer": "Принтер",
+  "serial": "Серийный №",
+  "fw": "прошивка",
+  "waste": "Счётчики отработанных чернил",
+  "pad": "Абсорбер",
+  "before": "До",
+  "after": "После",
+  "main": "Основной",
+  "borderless": "Без полей",
+  "state": "Состояние принтера",
+  "pages": "Напечатано страниц",
+  "scans": "Сканирований",
+  "first": "Первое использование",
+  "conn": "Подключение",
+  "work": "Выполненные работы",
+  "notes": "Примечания",
+  "sig_tech": "Подпись техника",
+  "sig_client": "Подпись клиента",
+  "footer": "Отчёт создан с помощью MDN Printer Service — приложения, разработанного Madena Digital SRL",
+  "kinds": {
+   "reset": [
+    "Считывание состояния и сохранение резервной копии памяти принтера.",
+    "Сброс счётчиков отработанных чернил и проверка повторным считыванием."
+   ],
+   "temp_unlock": [
+    "Считывание состояния принтера.",
+    "Временная разблокировка принтера (счётчики не изменялись)."
+   ],
+   "check": [
+    "Считывание состояния принтера без изменений."
+   ],
+   "guide": [
+    "Сервисная процедура выполнена пошагово согласно руководству в приложении."
+   ],
+   "restore": [
+    "Восстановление счётчиков из ранее созданной резервной копии."
+   ],
+   "canon_assist": []
+  },
+  "canon": {
+   "prep": "Подготовка проверена: абсорбер отработанных чернил заменён или очищен либо установлена внешняя ёмкость.",
+   "svc_auto": "Вход в сервисный режим обнаружен автоматически (идентификатор USB {a} → {b}).",
+   "svc_manual": "Вход в сервисный режим подтверждён техником вручную.",
+   "svc_none": "Вход в сервисный режим не подтверждён.",
+   "steps": "Процедура сброса с помощью сервисной программы: выполнено шагов — {d} из {t}.",
+   "maint": "Было открыто окно обслуживания драйвера Canon (очистка, проверка дюз, выравнивание).",
+   "nowrite": "Приложение MDN Printer Service не записывало данные в память принтера."
+  }
+ }
+}

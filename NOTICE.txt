@@ -1,0 +1,26 @@
+MDN Printer Service
+Copyright (c) 2026 Madena Digital SRL — service@mdndigital.ro
+
+Aplicația este distribuită sub licența European Union Public Licence v1.2
+(EUPL-1.2). Textul complet: https://interoperable-europe.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+
+Componente folosite:
+- epson_print_conf (c) Ircama, EUPL-1.2 — comunicarea cu imprimantele Epson
+- epson-usb, pysnmp, pyusb, pywebview, fpdf2, Pillow, cryptography, PyYAML și
+  alte biblioteci open-source, fiecare sub licența proprie (incluse în folderul
+  aplicației, în app\lib\*.dist-info).
+- Python (c) Python Software Foundation, licența PSF.
+- Fontul Manrope, SIL Open Font License 1.1.
+
+Codul sursă al aplicației se oferă la cerere, la service@mdndigital.ro.
+
+IMPORTANT: Resetarea contoarelor de cerneală uzată se face doar după
+înlocuirea sau curățarea tamponului. Resetarea fără înlocuire poate duce la
+scurgerea cernelii din imprimantă. Aplicația salvează un backup înainte de
+orice modificare; folosirea ei se face pe răspunderea utilizatorului.
+
+Date suplimentare de modele Epson / Additional Epson model data:
+app/data/epson_extra.json este derivat din devices.xml al proiectului ez-reset
+(https://github.com/CiRIP/ez-reset), licență GNU AGPL-3.0, convertit cu
+parse_devices.py din epson_print_conf. Fișierul derivat este distribuit sub
+aceeași licență AGPL-3.0; textul licenței: https://www.gnu.org/licenses/agpl-3.0.html
