@@ -12,10 +12,10 @@ rm -rf "$B" && mkdir -p "$ST/app/lib"
 if [ -n "${PY_TGZ:-}" ]; then
   cp "$PY_TGZ" "$B/py.tar.gz"
 else
-  ASSETS=$(gh api repos/astral-sh/python-build-standalone/releases/latest --jq '.assets[].browser_download_url' 2>/dev/null \
-    || curl -fsSL https://api.github.com/repos/astral-sh/python-build-standalone/releases/latest | grep -o 'https://[^"]*')
+  RID=$(gh api repos/astral-sh/python-build-standalone/releases/latest --jq .id)
+  ASSETS=$(gh api --paginate "repos/astral-sh/python-build-standalone/releases/$RID/assets?per_page=100" --jq '.[].browser_download_url')
   URL=$(echo "$ASSETS" | grep -E 'cpython-3\.12\.[0-9]+\+[0-9]+-x86_64-pc-windows-msvc-install_only(_stripped)?\.tar\.gz$' | sort | tail -1 || true)
-  if [ -z "$URL" ]; then echo "Nu am găsit Python pentru Windows"; echo "$ASSETS" | grep windows | head; exit 1; fi
+  if [ -z "$URL" ]; then echo "Nu am găsit Python pentru Windows"; echo "$ASSETS" | grep -c . ; exit 1; fi
   echo "Python: $URL"
   curl -fsSL -o "$B/py.tar.gz" "$URL"
 fi
