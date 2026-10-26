@@ -265,7 +265,15 @@ window.I18N = {
 "upd_check": "Verifică actualizările",
 "upd_latest": "Aveți cea mai nouă versiune ({v}).",
 "upd_offline": "Nu s-a putut verifica: fără conexiune la internet.",
-"upd_site": "Pagina de descărcare"
+"upd_site": "Pagina de descărcare",
+"can_box": "Cutie de întreținere: nu necesită resetare",
+"box_ok": "Cutia de întreținere nu e plină",
+"box_near": "Cutia de întreținere e aproape plină",
+"box_full": "Cutia de întreținere e plină",
+"msg_box_ok": "Acest model nu are tampon intern de resetat: cerneala uzată se adună într-o cutie de întreținere înlocuibilă. Nu trebuie făcut nimic acum.",
+"msg_box_near": "Cutia de întreținere se apropie de capacitatea maximă. Pregătiți o cutie nouă; înlocuirea durează câteva minute și nu necesită resetare.",
+"msg_box_full": "Cutia de întreținere e plină și imprimanta nu mai printează. Înlocuiți cutia (piesă originală Epson); nu este nevoie de resetare.",
+"step_box": "Model cu cutie de întreținere: nu e nevoie de resetare"
 },
 "en": {
 "nav_canon": "Canon assistant",
@@ -532,7 +540,15 @@ window.I18N = {
 "upd_check": "Check for updates",
 "upd_latest": "You have the latest version ({v}).",
 "upd_offline": "Could not check: no internet connection.",
-"upd_site": "Download page"
+"upd_site": "Download page",
+"can_box": "Maintenance box: no reset needed",
+"box_ok": "Maintenance box not full",
+"box_near": "Maintenance box nearly full",
+"box_full": "Maintenance box full",
+"msg_box_ok": "This model has no internal pad to reset: waste ink collects in a replaceable maintenance box. Nothing needs to be done now.",
+"msg_box_near": "The maintenance box is nearing its capacity. Get a new box ready; replacing it takes a few minutes and needs no reset.",
+"msg_box_full": "The maintenance box is full and the printer has stopped printing. Replace the box (genuine Epson part); no reset is needed.",
+"step_box": "Maintenance box model: no reset needed"
 },
 "de": {
 "nav_canon": "Canon-Assistent",
@@ -799,7 +815,15 @@ window.I18N = {
 "upd_check": "Nach Aktualisierungen suchen",
 "upd_latest": "Sie haben die neueste Version ({v}).",
 "upd_offline": "Prüfung nicht möglich: keine Internetverbindung.",
-"upd_site": "Download-Seite"
+"upd_site": "Download-Seite",
+"can_box": "Wartungsbox: kein Zurücksetzen nötig",
+"box_ok": "Wartungsbox nicht voll",
+"box_near": "Wartungsbox fast voll",
+"box_full": "Wartungsbox voll",
+"msg_box_ok": "Dieses Modell hat kein internes Tintenkissen zum Zurücksetzen: Die Resttinte sammelt sich in einer austauschbaren Wartungsbox. Derzeit ist nichts zu tun.",
+"msg_box_near": "Die Wartungsbox ist fast voll. Halten Sie eine neue Box bereit; der Austausch dauert wenige Minuten und erfordert kein Zurücksetzen.",
+"msg_box_full": "Die Wartungsbox ist voll und der Drucker druckt nicht mehr. Tauschen Sie die Box aus (Originalteil von Epson); ein Zurücksetzen ist nicht nötig.",
+"step_box": "Modell mit Wartungsbox: kein Zurücksetzen nötig"
 },
 "fr": {
 "nav_canon": "Assistant Canon",
@@ -1066,7 +1090,15 @@ window.I18N = {
 "upd_check": "Rechercher des mises à jour",
 "upd_latest": "Vous avez la dernière version ({v}).",
 "upd_offline": "Vérification impossible : pas de connexion Internet.",
-"upd_site": "Page de téléchargement"
+"upd_site": "Page de téléchargement",
+"can_box": "Boîtier de maintenance : aucune réinitialisation",
+"box_ok": "Boîtier de maintenance non plein",
+"box_near": "Boîtier de maintenance presque plein",
+"box_full": "Boîtier de maintenance plein",
+"msg_box_ok": "Ce modèle n’a pas de tampon interne à réinitialiser : l’encre usagée s’accumule dans un boîtier de maintenance remplaçable. Rien à faire pour le moment.",
+"msg_box_near": "Le boîtier de maintenance approche de sa capacité. Prévoyez un boîtier neuf ; le remplacement prend quelques minutes et ne nécessite aucune réinitialisation.",
+"msg_box_full": "Le boîtier de maintenance est plein et l’imprimante n’imprime plus. Remplacez le boîtier (pièce d’origine Epson) ; aucune réinitialisation n’est nécessaire.",
+"step_box": "Modèle à boîtier de maintenance : aucune réinitialisation"
 },
 "es": {
 "nav_canon": "Asistente Canon",
@@ -1333,7 +1365,15 @@ window.I18N = {
 "upd_check": "Buscar actualizaciones",
 "upd_latest": "Tiene la versión más reciente ({v}).",
 "upd_offline": "No se ha podido comprobar: sin conexión a Internet.",
-"upd_site": "Página de descarga"
+"upd_site": "Página de descarga",
+"can_box": "Caja de mantenimiento: no requiere restablecimiento",
+"box_ok": "Caja de mantenimiento no llena",
+"box_near": "Caja de mantenimiento casi llena",
+"box_full": "Caja de mantenimiento llena",
+"msg_box_ok": "Este modelo no tiene almohadilla interna que restablecer: la tinta residual se acumula en una caja de mantenimiento reemplazable. No hay que hacer nada por ahora.",
+"msg_box_near": "La caja de mantenimiento se acerca a su capacidad. Tenga preparada una caja nueva; el cambio dura unos minutos y no requiere restablecimiento.",
+"msg_box_full": "La caja de mantenimiento está llena y la impresora ya no imprime. Sustituya la caja (pieza original de Epson); no es necesario restablecer.",
+"step_box": "Modelo con caja de mantenimiento: no requiere restablecimiento"
 },
 "it": {
 "nav_canon": "Assistente Canon",
@@ -1600,7 +1640,15 @@ window.I18N = {
 "upd_check": "Verifica aggiornamenti",
 "upd_latest": "Ha la versione più recente ({v}).",
 "upd_offline": "Impossibile verificare: nessuna connessione a Internet.",
-"upd_site": "Pagina di download"
+"upd_site": "Pagina di download",
+"can_box": "Tanica di manutenzione: nessun azzeramento",
+"box_ok": "Tanica di manutenzione non piena",
+"box_near": "Tanica di manutenzione quasi piena",
+"box_full": "Tanica di manutenzione piena",
+"msg_box_ok": "Questo modello non ha un tampone interno da azzerare: l’inchiostro di scarto si raccoglie in una tanica di manutenzione sostituibile. Al momento non serve fare nulla.",
+"msg_box_near": "La tanica di manutenzione si sta riempiendo. Tenga pronta una tanica nuova; la sostituzione richiede pochi minuti e nessun azzeramento.",
+"msg_box_full": "La tanica di manutenzione è piena e la stampante non stampa più. Sostituisca la tanica (ricambio originale Epson); non è necessario alcun azzeramento.",
+"step_box": "Modello con tanica di manutenzione: nessun azzeramento"
 },
 "pt": {
 "nav_canon": "Assistente Canon",
@@ -1867,7 +1915,15 @@ window.I18N = {
 "upd_check": "Procurar atualizações",
 "upd_latest": "Tem a versão mais recente ({v}).",
 "upd_offline": "Não foi possível verificar: sem ligação à Internet.",
-"upd_site": "Página de transferência"
+"upd_site": "Página de transferência",
+"can_box": "Caixa de manutenção: sem reposição",
+"box_ok": "Caixa de manutenção não cheia",
+"box_near": "Caixa de manutenção quase cheia",
+"box_full": "Caixa de manutenção cheia",
+"msg_box_ok": "Este modelo não tem almofada interna para repor: a tinta residual acumula-se numa caixa de manutenção substituível. Não é preciso fazer nada por agora.",
+"msg_box_near": "A caixa de manutenção está a aproximar-se da capacidade máxima. Prepare uma caixa nova; a substituição demora alguns minutos e não requer reposição.",
+"msg_box_full": "A caixa de manutenção está cheia e a impressora deixou de imprimir. Substitua a caixa (peça original Epson); não é necessária reposição.",
+"step_box": "Modelo com caixa de manutenção: sem reposição"
 },
 "pl": {
 "nav_canon": "Asystent Canon",
@@ -2134,7 +2190,15 @@ window.I18N = {
 "upd_check": "Sprawdź aktualizacje",
 "upd_latest": "Masz najnowszą wersję ({v}).",
 "upd_offline": "Nie udało się sprawdzić: brak połączenia z internetem.",
-"upd_site": "Strona pobierania"
+"upd_site": "Strona pobierania",
+"can_box": "Pojemnik konserwacyjny: bez resetowania",
+"box_ok": "Pojemnik konserwacyjny niepełny",
+"box_near": "Pojemnik konserwacyjny prawie pełny",
+"box_full": "Pojemnik konserwacyjny pełny",
+"msg_box_ok": "Ten model nie ma wewnętrznego pochłaniacza do resetowania: zużyty tusz trafia do wymiennego pojemnika konserwacyjnego. Obecnie nic nie trzeba robić.",
+"msg_box_near": "Pojemnik konserwacyjny jest prawie pełny. Należy przygotować nowy pojemnik; wymiana trwa kilka minut i nie wymaga resetowania.",
+"msg_box_full": "Pojemnik konserwacyjny jest pełny i drukarka przestała drukować. Należy wymienić pojemnik (oryginalna część Epson); resetowanie nie jest potrzebne.",
+"step_box": "Model z pojemnikiem konserwacyjnym: bez resetowania"
 },
 "nl": {
 "nav_canon": "Canon-assistent",
@@ -2401,7 +2465,15 @@ window.I18N = {
 "upd_check": "Controleren op updates",
 "upd_latest": "U hebt de nieuwste versie ({v}).",
 "upd_offline": "Controleren niet mogelijk: geen internetverbinding.",
-"upd_site": "Downloadpagina"
+"upd_site": "Downloadpagina",
+"can_box": "Onderhoudscassette: geen reset nodig",
+"box_ok": "Onderhoudscassette niet vol",
+"box_near": "Onderhoudscassette bijna vol",
+"box_full": "Onderhoudscassette vol",
+"msg_box_ok": "Dit model heeft geen intern kussen om te resetten: de afvalinkt wordt opgevangen in een vervangbare onderhoudscassette. Er hoeft nu niets te gebeuren.",
+"msg_box_near": "De onderhoudscassette is bijna vol. Houd een nieuwe cassette klaar; vervangen duurt enkele minuten en vereist geen reset.",
+"msg_box_full": "De onderhoudscassette is vol en de printer drukt niet meer af. Vervang de cassette (origineel Epson-onderdeel); een reset is niet nodig.",
+"step_box": "Model met onderhoudscassette: geen reset nodig"
 },
 "hu": {
 "nav_canon": "Canon-asszisztens",
@@ -2668,7 +2740,15 @@ window.I18N = {
 "upd_check": "Frissítések keresése",
 "upd_latest": "Ön a legújabb verziót használja ({v}).",
 "upd_offline": "Az ellenőrzés nem sikerült: nincs internetkapcsolat.",
-"upd_site": "Letöltési oldal"
+"upd_site": "Letöltési oldal",
+"can_box": "Karbantartó doboz: nullázás nem szükséges",
+"box_ok": "A karbantartó doboz nincs tele",
+"box_near": "A karbantartó doboz majdnem tele",
+"box_full": "A karbantartó doboz tele",
+"msg_box_ok": "Ennek a modellnek nincs nullázandó belső párnája: a hulladékfesték egy cserélhető karbantartó dobozba gyűlik. Jelenleg nincs teendő.",
+"msg_box_near": "A karbantartó doboz hamarosan megtelik. Készítsen elő egy új dobozt; a csere néhány percig tart, és nem igényel nullázást.",
+"msg_box_full": "A karbantartó doboz megtelt, a nyomtató nem nyomtat. Cserélje ki a dobozt (eredeti Epson alkatrész); nullázásra nincs szükség.",
+"step_box": "Karbantartó dobozos modell: nullázás nem szükséges"
 },
 "tr": {
 "nav_canon": "Canon asistanı",
@@ -2935,7 +3015,15 @@ window.I18N = {
 "upd_check": "Güncellemeleri denetle",
 "upd_latest": "En yeni sürümü kullanıyorsunuz ({v}).",
 "upd_offline": "Denetlenemedi: internet bağlantısı yok.",
-"upd_site": "İndirme sayfası"
+"upd_site": "İndirme sayfası",
+"can_box": "Bakım kutusu: sıfırlama gerekmez",
+"box_ok": "Bakım kutusu dolu değil",
+"box_near": "Bakım kutusu neredeyse dolu",
+"box_full": "Bakım kutusu dolu",
+"msg_box_ok": "Bu modelde sıfırlanacak dahili ped yoktur: atık mürekkep değiştirilebilir bir bakım kutusunda toplanır. Şu anda bir şey yapmanız gerekmez.",
+"msg_box_near": "Bakım kutusu dolmak üzere. Yeni bir kutu hazırlayın; değişim birkaç dakika sürer ve sıfırlama gerektirmez.",
+"msg_box_full": "Bakım kutusu dolu ve yazıcı artık yazdırmıyor. Kutuyu değiştirin (orijinal Epson parçası); sıfırlama gerekmez.",
+"step_box": "Bakım kutulu model: sıfırlama gerekmez"
 },
 "ru": {
 "nav_canon": "Помощник Canon",
@@ -3202,7 +3290,15 @@ window.I18N = {
 "upd_check": "Проверить обновления",
 "upd_latest": "У Вас последняя версия ({v}).",
 "upd_offline": "Не удалось проверить: нет подключения к интернету.",
-"upd_site": "Страница загрузки"
+"upd_site": "Страница загрузки",
+"can_box": "Емкость для отработки: сброс не нужен",
+"box_ok": "Емкость для отработки не заполнена",
+"box_near": "Емкость для отработки почти заполнена",
+"box_full": "Емкость для отработки заполнена",
+"msg_box_ok": "У этой модели нет внутреннего абсорбера, который нужно сбрасывать: отработанные чернила собираются в сменной емкости для отработки. Сейчас ничего делать не нужно.",
+"msg_box_near": "Емкость для отработки почти заполнена. Подготовьте новую емкость; замена занимает несколько минут и не требует сброса.",
+"msg_box_full": "Емкость для отработки заполнена, и принтер перестал печатать. Замените емкость (оригинальная деталь Epson); сброс не требуется.",
+"step_box": "Модель с емкостью для отработки: сброс не нужен"
 }
 };
 window.LANG_NAMES = {"ro": "Română", "en": "English", "de": "Deutsch", "fr": "Français", "es": "Español", "it": "Italiano", "pt": "Português", "pl": "Polski", "nl": "Nederlands", "hu": "Magyar", "tr": "Türkçe", "ru": "Русский"};

@@ -148,6 +148,15 @@ class Api:
             f["support"] = (m or {}).get("mode", "temp")
             f["tested"] = bool((m or {}).get("tested"))
             f["db_model"] = (m or {}).get("model")
+            if f["support"] == "temp" and not f.get("identify_error"):
+                try:
+                    s = es.EpsonSession(f["handle"])
+                    box = _box(es._status_to_json(s.printer.get_printer_status() or {}))
+                    s.close()
+                    if box:
+                        f["support"], f["box"] = "box", box
+                except Exception:  # noqa: BLE001
+                    pass
         others = []
         for p in platform_util.installed_printers():
             name = p["name"]
@@ -185,6 +194,11 @@ class Api:
         data["handle"] = handle
         data["connection"] = "USB" if handle.startswith("usb:") else "Wi-Fi"
         data["support"] = (entry or {}).get("mode", "temp")
+        box = _box(data.get("status"))
+        if box and data["support"] == "temp":
+            # Fără contor de resetat: cerneala uzată merge într-o cutie înlocuibilă.
+            data["support"] = "box"
+            data["box"] = box
         data["tested"] = bool((entry or {}).get("tested"))
         data["db_model"] = (entry or {}).get("model")
         data["leds"] = _leds(data)
@@ -383,6 +397,18 @@ class Api:
         if path and os.path.exists(path):
             platform_util.open_path(os.path.dirname(path) if path.endswith(".json") else path)
         return {}
+
+
+def _box(status):
+    """Cutia de întreținere (modelele Epson fără tampon intern): starea cea mai gravă."""
+    mb = (status or {}).get("maintenance_box") or {}
+    states = [str(v) for k, v in mb.items() if k[len("maintenance_box_"):].isdigit()]
+    if not states:
+        return None
+    rank = {"full": 3, "near": 2, "not": 1}
+    worst = max(states, key=lambda s: rank.get(s.split(" ")[0], 0))
+    state = {"full": "full", "near": "near", "not": "ok"}.get(worst.split(" ")[0], "unknown")
+    return {"state": state, "replaced": mb.get("maintenance_box_replacement_counter")}
 
 
 def _leds(d):

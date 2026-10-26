@@ -165,7 +165,7 @@
     $("#scanLead").textContent = t("printers_lead_done");
     const rows = [];
     (r.printers || []).forEach((p, i) => {
-      const can = p.support === "auto" ? t("can_auto") : t("can_temp");
+      const can = p.support === "auto" ? t("can_auto") : p.support === "box" ? t("can_box") : t("can_temp");
       const st = p.identify_error ? `<span class="state na">${esc(t("st_no_answer"))}</span>` : `<span class="state ok">${esc(t("st_found"))}</span>`;
       const conn = p.connection === "USB" ? "USB" : `Wi-Fi, ${esc(p.ip || "")}`;
       rows.push(`<div class="trow"><div class="name"><b>Epson ${esc(p.model || p.raw_model || "?")}</b><small>${esc(p.raw_model || "")}</small></div>
@@ -226,7 +226,13 @@
       else if (shown >= 85) { state = "warn"; word = t("pad_near"); msg = t("msg_near"); }
       else { state = "ok"; word = t("pad_ok"); msg = t("msg_ok"); }
     }
-    if (d.support !== "auto") msg = S.flow.done === "temp" ? t("msg_reset") : t("msg_temp");
+    if (d.support === "box") {
+      const b = (d.box && d.box.state) || "unknown";
+      state = b === "ok" ? "ok" : b === "unknown" ? "na" : "warn";
+      word = t({ ok: "box_ok", near: "box_near", full: "box_full" }[b] || "pad_na");
+      msg = t({ ok: "msg_box_ok", near: "msg_box_near", full: "msg_box_full" }[b] || "msg_box_ok");
+      $("#padPct").textContent = "—"; $("#padBorder").textContent = "—";
+    } else if (d.support !== "auto") msg = S.flow.done === "temp" ? t("msg_reset") : t("msg_temp");
     if (S.flow.backup && !done && d.support === "auto") msg = t("msg_backup");
     stw.className = "state-word " + state; stw.textContent = word;
     $("#sheetMsg").textContent = msg;
@@ -260,6 +266,8 @@
       if (f.done === "reset") li.push(`<li><div class="step done"><span class="n">3</span>${esc(t("step_reset_done"))}</div></li>`);
       else if (f.backup) li.push(`<li><button type="button" class="step act" id="stepReset"><span class="n">3</span>${esc(t("step_reset"))}</button></li>`);
       else li.push(`<li><div class="step lock"><span class="n">3</span>${esc(t("step_reset_lock"))}</div></li>`);
+    } else if (d.support === "box") {
+      li.push(`<li><div class="step done"><span class="n">2</span>${esc(t("step_box"))}</div></li>`);
     } else {
       li.push(f.done === "temp" ? `<li><div class="step done"><span class="n">2</span>${esc(t("step_temp_done"))}</div></li>`
         : `<li><button type="button" class="step act" id="stepTemp"><span class="n">2</span>${esc(t("step_temp"))}</button></li>`);
@@ -322,7 +330,7 @@
         ${row(t("f_pages"), st["Total print page counter"] != null ? num(st["Total print page counter"]) : null)}
         ${row(t("f_scans"), st["Total scan counter"] != null ? num(st["Total scan counter"]) : null)}
         ${row(t("f_status"), statusText(d.status))}
-        ${row(t("f_support"), (d.support === "auto" ? t("can_auto") : t("can_temp")) + (d.support === "auto" ? (d.tested ? ", " + t("f_tested") : ", " + t("f_untested")) : ""), d.support === "auto" ? "good" : "warn-t")}
+        ${row(t("f_support"), (d.support === "auto" ? t("can_auto") : d.support === "box" ? t("can_box") : t("can_temp")) + (d.support === "auto" ? (d.tested ? ", " + t("f_tested") : ", " + t("f_untested")) : ""), d.support === "auto" || d.support === "box" ? "good" : "warn-t")}
       </dl>`;
     } else if (S.tab === "counters") {
       const keys = Object.keys(st);
@@ -337,14 +345,14 @@
       body.innerHTML = `<p class="small">${S.flow.backup ? esc(t("backup_saved")) + " " + esc(S.flow.backup) : esc(t("backup_none"))}</p>
         <div class="actions-row">
           ${d.support === "auto" ? `<button type="button" class="btn" id="btnRestore">${esc(t("restore"))}</button>` : ""}
-          <button type="button" class="btn" id="btnTemp">${esc(t("temp_unlock"))}</button>
+          ${d.support === "box" ? "" : `<button type="button" class="btn" id="btnTemp">${esc(t("temp_unlock"))}</button>`}
           <button type="button" class="btn" data-folder="backup">${esc(t("open_backups"))}</button>
         </div>`;
       const br = $("#btnRestore"); if (br) br.onclick = async () => {
         busy(br, true); const r = await call("restore", d.handle); busy(br, false);
         if (r.ok) { S.flow.after = r.waste_after; toast(t("toast_saved")); reread(); } else if (r.error !== "cancelled") toast(errText(r), true);
       };
-      $("#btnTemp").onclick = (e) => tempUnlock(d, e.target);
+      if ($("#btnTemp")) $("#btnTemp").onclick = (e) => tempUnlock(d, e.target);
     } else if (S.tab === "jobs") {
       body.innerHTML = `<p class="small">…</p>`;
       call("history_list", d.serial || "").then((r) => {
