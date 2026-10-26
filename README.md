@@ -10,3 +10,9 @@ Aplicație pentru citirea imprimantelor cu jet de cerneală și resetarea contor
 - `.github/workflows/build.yml` – construire automată (din fila Actions sau la fiecare etichetă `v*`); installerele ajung în Releases
 
 Codul este distribuit sub licența EUPL-1.2 (vezi `NOTICE.txt`, `EULA.txt`).
+
+## Documentație
+- [Lansarea unei versiuni noi](docs/LANSARE.md)
+- [Arhitectura](docs/ARHITECTURA.md)
+- [Interfețele de rețea (API)](docs/API.md)
+- Manualul de utilizare: [printer.mdndigital.ro/manual.html](https://printer.mdndigital.ro/manual.html)
