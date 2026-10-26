@@ -1,4 +1,4 @@
-# Construiește automat MDN Printer Service pentru macOS (Apple Silicon și Intel) și Linux
+# Construiește automat MDN Printer Service pentru Windows, macOS (Apple Silicon și Intel) și Linux
 # și pune fișierele în pagina „Releases” a depozitului (vX.Y.Z, după backend/config.py).
 # Pornește manual, din fila Actions („Run workflow”), sau la fiecare etichetă v*.
 name: Build
@@ -54,7 +54,32 @@ jobs:
           for i in 1 2 3 4 5; do
             gh release view "$V" >/dev/null 2>&1 && break
             gh release create "$V" --target "$GITHUB_SHA" --title "MDN Printer Service $V" \
-              --notes "Instalatoare pentru macOS (Apple Silicon și Intel) și Linux." && break
+              --notes "Instalatoare pentru Windows, macOS (Apple Silicon și Intel) și Linux." && break
             sleep $((RANDOM % 10 + 5))
           done
           gh release upload "$V" dist/*.dmg dist/*.AppImage --clobber 2>/dev/null || gh release upload "$V" $(ls dist/*.dmg dist/*.AppImage 2>/dev/null) --clobber
+
+  windows:
+    runs-on: ubuntu-22.04
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: NSIS
+        run: sudo apt-get update && sudo apt-get install -y nsis
+      - name: Construire installer Windows
+        run: bash packaging/windows/ci_build.sh
+      - name: Publicare în Releases
+        shell: bash
+        run: |
+          V=v$(sed -n 's/^VERSION = "\(.*\)"/\1/p' app/backend/config.py)
+          for i in 1 2 3 4 5; do
+            gh release view "$V" >/dev/null 2>&1 && break
+            gh release create "$V" --target "$GITHUB_SHA" --title "MDN Printer Service $V" \
+              --notes "Instalatoare pentru Windows, macOS (Apple Silicon și Intel) și Linux." && break
+            sleep $((RANDOM % 10 + 5))
+          done
+          gh release upload "$V" dist/MDN-Printer-Service-Setup.exe --clobber
