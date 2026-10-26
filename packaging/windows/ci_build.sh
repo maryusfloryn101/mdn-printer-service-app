@@ -8,10 +8,16 @@ VERSION=$(sed -n 's/^VERSION = "\(.*\)"/\1/p' "$ROOT/app/backend/config.py")
 rm -rf "$B" && mkdir -p "$ST/app/lib"
 
 # 1. Python 3.12 portabil pentru Windows
-URL=$(curl -fsSL https://api.github.com/repos/astral-sh/python-build-standalone/releases/latest \
-  | grep -o 'https://[^"]*cpython-3\.12\.[0-9]*+[0-9]*-x86_64-pc-windows-msvc-install_only\.tar\.gz' | head -1)
-echo "Python: $URL"
-curl -fsSL -o "$B/py.tar.gz" "$URL"
+if [ -n "${PY_TGZ:-}" ]; then
+  cp "$PY_TGZ" "$B/py.tar.gz"
+else
+  ASSETS=$(gh api repos/astral-sh/python-build-standalone/releases/latest --jq '.assets[].browser_download_url' 2>/dev/null \
+    || curl -fsSL https://api.github.com/repos/astral-sh/python-build-standalone/releases/latest | grep -o 'https://[^"]*')
+  URL=$(echo "$ASSETS" | grep -E 'cpython-3\.12\.[0-9]+\+[0-9]+-x86_64-pc-windows-msvc-install_only(_stripped)?\.tar\.gz$' | sort | tail -1 || true)
+  if [ -z "$URL" ]; then echo "Nu am găsit Python pentru Windows"; echo "$ASSETS" | grep windows | head; exit 1; fi
+  echo "Python: $URL"
+  curl -fsSL -o "$B/py.tar.gz" "$URL"
+fi
 tar -xzf "$B/py.tar.gz" -C "$ST"
 ( cd "$ST/python" && find . -name "*.pdb" -delete && rm -rf include libs Lib/test Lib/idlelib Lib/ensurepip Lib/lib2to3 Scripts tcl Lib/tkinter DLLs/_tkinter.pyd DLLs/tcl*.dll DLLs/tk*.dll && find . -name "__pycache__" -type d -prune -exec rm -rf {} + )
 
@@ -23,7 +29,7 @@ python -m pip install --quiet --target "$ST/app/lib" --platform win_amd64 --pyth
   defusedxml==0.7.1 pyyaml cryptography colorama typing_extensions certifi hexdump2==1.2.2
 python -m pip install --quiet --target "$ST/app/lib" --no-deps \
   pysnmp-sync-adapter==1.1.0 pyprintlpr==1.1.1 epson-escp2==1.0.4 proxy-tools==0.1.0
-rm -rf "$ST/app/lib/bin" && find "$ST/app/lib" -name "__pycache__" -type d -prune -exec rm -rf {} +
+rm -rf "$ST/app/lib/bin" "$ST/app/lib/share" && find "$ST/app/lib" -name "__pycache__" -type d -prune -exec rm -rf {} +
 
 # 3. Aplicația
 cp -r "$ROOT/app/main.py" "$ROOT/app/backend" "$ROOT/app/ui" "$ROOT/app/fonts" "$ROOT/app/data" "$ROOT/app/docs" "$ST/app/"
