@@ -61,6 +61,7 @@ class Api:
         self._meta = {}
         self._lock = threading.Lock()
         self._window = None
+        self._job = {"state": "idle"}
         from backend.update import Updater
         self._upd = Updater()
 
@@ -73,6 +74,190 @@ class Api:
                 "models": self._models.counts(), "models_version": self._models.version,
                 "license": self._lic.state(), "linux_usb": platform_util.linux_usb_ready(),
                 "platform": sys.platform}
+
+    # ---------------- unelte de service ----------------
+    def _job_start(self, name, fn):
+        with self._lock:
+            if self._job.get("state") == "running":
+                return {"ok": False, "error": "busy"}
+            self._job = {"state": "running", "name": name, "done": 0, "total": 0}
+
+        def progress(done, total, *_):
+            self._job["done"], self._job["total"] = done, total
+
+        def run():
+            try:
+                res = fn(progress)
+                self._job = dict(res or {}, state="done", name=name)
+            except Exception as exc:  # noqa: BLE001
+                log.error("%s: %s\n%s", name, exc, traceback.format_exc())
+                self._job = {"state": "error", "name": name, "error": str(exc)}
+        threading.Thread(target=run, daemon=True).start()
+        return {"started": True}
+
+    @_safe
+    def job_progress(self):
+        return dict(self._job)
+
+    def _read_meta(self, handle):
+        return (self._meta.get(handle) or {}).get("read") or {}
+
+    @_safe
+    def service_info(self, handle):
+        s = self._session(handle)
+        with s.lock:
+            return s.service_info()
+
+    @_safe
+    def reset_counter(self, handle, key, client="", contact="", notes=""):
+        if not self._lic.is_active():
+            return {"ok": False, "error": "license"}
+        meta = self._meta.get(handle) or {}
+        if not meta.get("backup"):
+            return {"ok": False, "error": "no_backup"}
+        read = meta.get("read") or {}
+        s = self._session(handle)
+        with s.lock:
+            res = s.reset_counter(key)
+            after = s.printer.get_waste_ink_levels() if res["ok"] else None
+        job_id = None
+        if res["ok"]:
+            job_id = self._history.add(
+                client=client, client_contact=contact, brand="Epson",
+                model=read.get("db_model") or read.get("model"), serial=read.get("serial"),
+                firmware=read.get("firmware"), connection=read.get("connection"),
+                kind="reset", waste_before=read.get("waste"), waste_after=after,
+                stats=read.get("stats"), backup_path=meta.get("backup"),
+                notes=(f"[{key}] " + (notes or "")).strip())
+        res.update({"waste_after": after, "job_id": job_id})
+        return res
+
+    @_safe
+    def service_print(self, handle, what, power=False):
+        s = self._session(handle)
+        with s.lock:
+            try:
+                res = s.print_service(what, bool(power))
+            except RuntimeError as exc:
+                if str(exc) == "network_only":
+                    return {"ok": False, "error": "network_only"}
+                raise
+        read = self._read_meta(handle)
+        if res.get("ok"):
+            self._history.add(brand="Epson", model=read.get("db_model") or read.get("model"),
+                              serial=read.get("serial"), connection=read.get("connection"),
+                              kind="service", notes=what + (" (power)" if power else ""))
+        return res
+
+    @_safe
+    def set_poweroff(self, handle, mins):
+        if not self._lic.is_active():
+            return {"ok": False, "error": "license"}
+        s = self._session(handle)
+        with s.lock:
+            return s.set_poweroff(int(mins))
+
+    def _mem_folder(self):
+        return os.path.join(store.documents_dir(), "Backup", "Memorie")
+
+    @_safe
+    def dump_start(self, handle, start=0, end=255):
+        start, end = max(0, int(start)), min(0xFFFF, int(end))
+        if end < start:
+            return {"ok": False, "error": "range"}
+        s = self._session(handle)
+        read = self._read_meta(handle)
+
+        def job(progress):
+            with s.lock:
+                values = s.dump(start, end, progress)
+            os.makedirs(self._mem_folder(), exist_ok=True)
+            import re as _re
+            import time as _time
+            stamp = _time.strftime("%Y-%m-%d_%H-%M-%S")
+            serial = _re.sub(r"[^A-Za-z0-9]", "", str(read.get("serial") or "")) or "fara-serie"
+            path = os.path.join(self._mem_folder(), f"memorie_{read.get('model') or 'epson'}_{serial}_{stamp}.json")
+            with open(path, "w", encoding="utf-8") as fh:
+                import json as _json
+                _json.dump({"app": "MDN Printer Service", "kind": "dump", "model": read.get("model"),
+                            "serial": read.get("serial"), "date": stamp, "range": [start, end],
+                            "eeprom": {str(a): v for a, v in values.items()}}, fh, indent=1)
+            return {"path": path, "cells": len(values), "unread": sum(1 for v in values.values() if v is None)}
+        return self._job_start("dump", job)
+
+    @_safe
+    def snapshots_list(self):
+        import json as _json
+        out = []
+        folder = self._mem_folder()
+        if os.path.isdir(folder):
+            for f in sorted(os.listdir(folder), reverse=True):
+                if f.endswith(".json"):
+                    try:
+                        with open(os.path.join(folder, f), encoding="utf-8") as fh:
+                            d = _json.load(fh)
+                        out.append({"file": f, "model": d.get("model"), "serial": d.get("serial"),
+                                    "date": d.get("date"), "range": d.get("range")})
+                    except Exception:  # noqa: BLE001
+                        continue
+        return {"items": out, "folder": folder}
+
+    @_safe
+    def snapshots_compare(self, a, b):
+        import json as _json
+        folder = self._mem_folder()
+        def load(f):
+            if os.path.basename(f) != f:
+                raise ValueError("fișier invalid")
+            with open(os.path.join(folder, f), encoding="utf-8") as fh:
+                return _json.load(fh)
+        A, B = load(a), load(b)
+        ea, eb = A.get("eeprom") or {}, B.get("eeprom") or {}
+        diff = []
+        for k in sorted(set(ea) & set(eb), key=int):
+            if ea[k] != eb[k] and ea[k] is not None and eb[k] is not None:
+                diff.append({"addr": int(k), "a": ea[k], "b": eb[k]})
+        return {"diff": diff, "a": A.get("date"), "b": B.get("date"),
+                "same_printer": (A.get("serial") == B.get("serial"))}
+
+    @_safe
+    def read_cells(self, handle, start, count=16):
+        start, count = max(0, int(start)), max(1, min(256, int(count)))
+        s = self._session(handle)
+        with s.lock:
+            vals = s.dump(start, start + count - 1)
+        return {"cells": [{"addr": a, "value": v} for a, v in sorted(vals.items())]}
+
+    @_safe
+    def write_cell(self, handle, addr, value, notes=""):
+        if not self._lic.is_active():
+            return {"ok": False, "error": "license"}
+        addr, value = int(addr), int(value)
+        if not (0 <= addr <= 0xFFFF and 0 <= value <= 255):
+            return {"ok": False, "error": "range"}
+        s = self._session(handle)
+        with s.lock:
+            res = s.write_cell(addr, value)
+        read = self._read_meta(handle)
+        self._history.add(brand="Epson", model=read.get("db_model") or read.get("model"),
+                          serial=read.get("serial"), connection=read.get("connection"), kind="eeprom_write",
+                          notes=f"adresa {addr}: {res.get('before')} -> {res.get('after')} " + (notes or ""))
+        return res
+
+    @_safe
+    def find_key_start(self, handle):
+        s = self._session(handle)
+        read = self._read_meta(handle)
+
+        def job(progress):
+            with s.lock:
+                res = s.find_key(progress)
+            if res.get("key") and read.get("model"):
+                keys = dict(self._settings.get("found_keys") or {})
+                keys[read["model"]] = res["key"]
+                self._settings.set("found_keys", keys)
+            return res
+        return self._job_start("find_key", job)
 
     # ---------------- actualizări ----------------
     @_safe
@@ -189,6 +374,16 @@ class Api:
             entry = self._models.find("Epson", ident.get("model"))
             if entry:
                 s.set_model(entry["family"])
+            else:
+                # Fără date de resetare: folosim totuși configurația de citire (cheie, contoare),
+                # din bibliotecă sau din cheia găsită anterior cu „Detectare cheie”.
+                from backend import epson_service as es
+                conf = es.find_conf_model(ident.get("model"), ident.get("raw_model"))
+                if conf:
+                    s.set_model(conf)
+                key = (self._settings.get("found_keys") or {}).get(ident.get("model") or "")
+                if key and not (s.printer.parm or {}).get("read_key"):
+                    s.printer.parm = dict(s.printer.parm or {}, read_key=list(key))
             data = s.read_all()
         data.update(ident)
         data["handle"] = handle

@@ -353,6 +353,8 @@
         if (r.ok) { S.flow.after = r.waste_after; toast(t("toast_saved")); reread(); } else if (r.error !== "cancelled") toast(errText(r), true);
       };
       if ($("#btnTemp")) $("#btnTemp").onclick = (e) => tempUnlock(d, e.target);
+    } else if (S.tab === "service") {
+      renderService(d, body);
     } else if (S.tab === "jobs") {
       body.innerHTML = `<p class="small">…</p>`;
       call("history_list", d.serial || "").then((r) => {
@@ -360,6 +362,148 @@
         body.innerHTML = items.length ? `<ul class="list">${items.map((j) => `<li>${esc(fmtDate(j.created))}: ${esc(t("k_" + j.kind))}${j.client ? ", " + esc(j.client) : ""}</li>`).join("")}</ul>` : `<p class="small">${esc(t("no_jobs"))}</p>`;
       });
     }
+  }
+  // ---------- unelte de service ----------
+  const errT = (r) => ({ network_only: t("e_network_only"), range: t("e_range"), busy: t("e_busy") }[r.error] || errText(r));
+  async function renderService(d, body) {
+    body.innerHTML = `<p class="small">${esc(t("svc_loading"))}</p>`;
+    const r = await call("service_info", d.handle);
+    if (S.tab !== "service" || S.sheet !== d) return;
+    if (!r.ok) { body.innerHTML = `<p class="small warn-t">${esc(errText(r))}</p>`; return; }
+    const lic = (S.info && S.info.license) || {};
+    const lvl = (v) => v == null ? "—" : pct(v) + " %";
+    const parts = [];
+    // contoare separate
+    parts.push(`<h3 class="mt">${esc(t("svc_counters_t"))}</h3>`);
+    if ((r.counters || []).length) {
+      parts.push(`<table class="svc-t"><tbody>${r.counters.map((c) => `<tr><td>${esc(t("cnt_" + c.key))}</td><td class="r">${esc(lvl(c.level))}</td>
+        <td class="r"><button type="button" class="btn" data-rc="${esc(c.key)}" ${S.flow.backup ? "" : "disabled"}>${esc(t("svc_reset_one"))}</button></td></tr>`).join("")}</tbody></table>`);
+      if (!S.flow.backup) parts.push(`<p class="small muted">${esc(t("svc_need_backup"))}</p>`);
+    } else parts.push(`<p class="small">${esc(t("svc_no_counters"))}</p>`);
+    // întreținere
+    const dis = r.network ? "" : "disabled";
+    parts.push(`<h3 class="mt">${esc(t("svc_maint_t"))}</h3><div class="actions-row">
+      <button type="button" class="btn" data-sp="nozzle" ${dis}>${esc(t("svc_nozzle"))}</button>
+      <button type="button" class="btn" data-sp="pattern" ${dis}>${esc(t("svc_pattern"))}</button>
+      <button type="button" class="btn" data-sp="clean" ${dis}>${esc(t("svc_clean"))}</button>
+      <button type="button" class="btn" data-sp="power" ${dis}>${esc(t("svc_clean_power"))}</button></div>
+      ${r.network ? "" : `<p class="small muted">${esc(t("svc_net_only"))}</p>`}`);
+    // informații
+    const info = [];
+    if (r.head_id) info.push([t("svc_head"), r.head_id]);
+    if (r.cartridges) info.push([t("svc_carts"), Array.isArray(r.cartridges) ? r.cartridges.join(", ") : r.cartridges]);
+    if ((r.ink_replacements || []).length) info.push([t("svc_inkrep"), r.ink_replacements.map((x) => `${x.color}: ${x.value}`).join(", ")]);
+    const stats = d.stats || {};
+    Object.keys(stats).filter((k) => /replacement|Maintenance box/i.test(k)).forEach((k) => info.push([k, stats[k]]));
+    (r.cartridge_info || []).forEach((c, i) => { if (c && typeof c === "object") info.push([t("svc_cartinfo") + " " + (i + 1), Object.entries(c).map(([k, v]) => k + ": " + v).join(", ")]); });
+    if (info.length) parts.push(`<h3 class="mt">${esc(t("svc_info_t"))}</h3><dl class="dl">${info.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>`);
+    // timer
+    if (r.poweroff_supported) parts.push(`<h3 class="mt">${esc(t("svc_power_t"))}</h3><div class="svc-row">
+      <label for="svcPow">${esc(t("svc_power_l"))}</label><input id="svcPow" type="number" min="0" max="1440" value="${esc(r.poweroff == null ? "" : r.poweroff)}">
+      <button type="button" class="btn" id="svcPowSave">${esc(t("svc_save"))}</button></div>`);
+    // avansat
+    parts.push(`<details class="svc-adv"${S.advOpen ? " open" : ""}><summary>${esc(t("svc_adv_t"))}</summary>
+      <p class="small warn-t">${esc(t("svc_adv_warn"))}</p>
+      <h3 class="mt">${esc(t("svc_dump_t"))}</h3><div class="svc-row">
+        <label for="svcFrom">${esc(t("svc_dump_range"))}</label>
+        <select id="svcRange"><option value="0-255">0–255</option><option value="0-1023">0–1023</option><option value="0-2047">0–2047</option></select>
+        <button type="button" class="btn" id="svcDump">${esc(t("svc_dump_btn"))}</button></div>
+      <div id="svcDumpMsg" class="small"></div>
+      <h3 class="mt">${esc(t("svc_cmp_t"))}</h3><p class="small">${esc(t("svc_cmp_help"))}</p>
+      <div class="svc-row"><select id="svcA"></select><select id="svcB"></select><button type="button" class="btn" id="svcCmp">${esc(t("svc_cmp_btn"))}</button></div>
+      <div id="svcCmpOut"></div>
+      <h3 class="mt">${esc(t("svc_edit_t"))}</h3>
+      <div class="svc-row"><label for="svcAddr">${esc(t("svc_addr"))}</label><input id="svcAddr" type="number" min="0" max="65535" value="0">
+        <button type="button" class="btn" id="svcRead">${esc(t("svc_read"))}</button>
+        <label for="svcVal">${esc(t("svc_value"))}</label><input id="svcVal" type="number" min="0" max="255">
+        <button type="button" class="btn" id="svcWrite">${esc(t("svc_write"))}</button></div>
+      <div id="svcCells"></div>
+      ${r.has_keys ? "" : `<h3 class="mt">${esc(t("svc_key_t"))}</h3><p class="small">${esc(t("svc_key_help"))}</p>
+        <div class="actions-row"><button type="button" class="btn" id="svcKey">${esc(t("svc_key_btn"))}</button></div><div id="svcKeyMsg" class="small"></div>`}
+    </details>`);
+    body.innerHTML = parts.join("");
+    const needLic = () => { if (!lic.active) { toast(t("e_license"), true); show("settings"); return true; } return false; };
+    $$("[data-rc]").forEach((b) => b.onclick = async () => {
+      if (needLic()) return;
+      const name = t("cnt_" + b.dataset.rc);
+      const form = await modal({ title: t("svc_reset_one") + ": " + name, body: `<p>${esc(t("svc_reset_confirm", { c: name }))}</p>` + clientFields(), form: true,
+        buttons: [{ label: t("cancel") }, { label: t("svc_reset_one"), value: true, primary: true }] });
+      if (!form) return;
+      busy(b, true); const res = await call("reset_counter", d.handle, b.dataset.rc, form.client, form.contact, form.notes); busy(b, false);
+      if (res.ok) { toast(t("svc_reset_ok")); S.flow.after = res.waste_after; renderService(d, body); } else toast(errT(res), true);
+    });
+    $$("[data-sp]").forEach((b) => b.onclick = async () => {
+      const what = b.dataset.sp === "power" ? "clean" : b.dataset.sp, power = b.dataset.sp === "power";
+      if (power && !(await modal({ title: t("svc_clean_power"), body: `<p>${esc(t("svc_clean_confirm"))}</p>`, buttons: [{ label: t("cancel") }, { label: t("svc_clean_power"), value: true, primary: true }] }))) return;
+      busy(b, true); const res = await call("service_print", d.handle, what, power); busy(b, false);
+      res.ok ? toast(t("svc_sent")) : toast(errT(res), true);
+    });
+    if ($("#svcPowSave")) $("#svcPowSave").onclick = async (e) => {
+      if (needLic()) return;
+      busy(e.target, true); const res = await call("set_poweroff", d.handle, Number($("#svcPow").value || 0)); busy(e.target, false);
+      res.ok ? toast(t("svc_power_ok")) : toast(errT(res), true);
+    };
+    $(".svc-adv").addEventListener("toggle", (e) => { S.advOpen = e.target.open; });
+    const loadSnaps = async () => {
+      const s = await call("snapshots_list"); const items = s.items || [];
+      const opt = items.map((x) => `<option value="${esc(x.file)}">${esc(x.date || x.file)} · ${esc(x.model || "")} ${esc(x.serial || "")}</option>`).join("");
+      $("#svcA").innerHTML = opt; $("#svcB").innerHTML = opt;
+      if (items.length > 1) { $("#svcA").selectedIndex = 1; $("#svcB").selectedIndex = 0; }
+    };
+    loadSnaps();
+    const poll = (onDone, onProg) => new Promise((resolve) => {
+      const tm = setInterval(async () => {
+        const j = await call("job_progress");
+        if (j.state === "running") { onProg(j); return; }
+        clearInterval(tm); onDone(j); resolve();
+      }, 600);
+    });
+    $("#svcDump").onclick = async (e) => {
+      const [a, b] = $("#svcRange").value.split("-").map(Number);
+      const st = await call("dump_start", d.handle, a, b);
+      if (st.ok === false) { toast(errT(st), true); return; }
+      busy(e.target, true);
+      await poll((j) => {
+        busy(e.target, false);
+        $("#svcDumpMsg").textContent = j.state === "done" ? t("svc_dump_ok", { n: j.cells }) + " " + (j.path || "") : t("svc_job_err", { d: j.error || "?" });
+        loadSnaps();
+      }, (j) => { $("#svcDumpMsg").textContent = t("svc_dump_prog", { p: j.total ? Math.floor(100 * j.done / j.total) : 0 }); });
+    };
+    $("#svcCmp").onclick = async () => {
+      const a = $("#svcA").value, b = $("#svcB").value;
+      if (!a || !b || a === b) { $("#svcCmpOut").innerHTML = `<p class="small">${esc(t("svc_cmp_need"))}</p>`; return; }
+      const res = await call("snapshots_compare", a, b);
+      if (!res.ok) { toast(errText(res), true); return; }
+      $("#svcCmpOut").innerHTML = (res.same_printer ? "" : `<p class="small warn-t">${esc(t("svc_cmp_other"))}</p>`) + (res.diff.length
+        ? `<table class="svc-t"><thead><tr><th>${esc(t("svc_addr"))}</th><th>${esc(t("svc_before"))}</th><th>${esc(t("svc_after"))}</th></tr></thead><tbody>${res.diff.map((x) => `<tr><td>${x.addr} (0x${x.addr.toString(16).toUpperCase()})</td><td>${esc(x.a)} (${parseInt(x.a, 16)})</td><td>${esc(x.b)} (${parseInt(x.b, 16)})</td></tr>`).join("")}</tbody></table>`
+        : `<p class="small">${esc(t("svc_cmp_none"))}</p>`);
+    };
+    $("#svcRead").onclick = async (e) => {
+      busy(e.target, true); const res = await call("read_cells", d.handle, Number($("#svcAddr").value || 0), 16); busy(e.target, false);
+      if (!res.ok) { toast(errText(res), true); return; }
+      $("#svcCells").innerHTML = `<table class="svc-t"><tbody><tr>${res.cells.map((c) => `<td title="${c.addr}"><small>${c.addr}</small><br>${c.value == null ? "—" : esc(c.value) + " (" + parseInt(c.value, 16) + ")"}</td>`).join("")}</tr></tbody></table>`;
+    };
+    $("#svcWrite").onclick = async (e) => {
+      if (needLic()) return;
+      const a = Number($("#svcAddr").value), v = Number($("#svcVal").value);
+      if (!Number.isInteger(a) || !Number.isInteger(v) || v < 0 || v > 255 || a < 0) { toast(t("e_range"), true); return; }
+      const ok1 = await modal({ title: t("svc_write"), body: `<p>${esc(t("svc_write_confirm", { v, a }))}</p>`, buttons: [{ label: t("cancel") }, { label: t("svc_write"), value: true, primary: true }] });
+      if (!ok1) return;
+      const ok2 = await modal({ title: t("svc_write"), body: `<p class="warn-t">${esc(t("svc_write_confirm2"))}</p>`, buttons: [{ label: t("cancel") }, { label: t("svc_write"), value: true, primary: true }] });
+      if (!ok2) return;
+      busy(e.target, true); const res = await call("write_cell", d.handle, a, v, ""); busy(e.target, false);
+      res.ok ? toast(t("svc_write_ok", { a, b: res.before, c: res.after })) : toast(errT(res), true);
+      $("#svcRead").click();
+    };
+    if ($("#svcKey")) $("#svcKey").onclick = async (e) => {
+      const st = await call("find_key_start", d.handle);
+      if (st.ok === false) { toast(errT(st), true); return; }
+      busy(e.target, true);
+      await poll((j) => {
+        busy(e.target, false);
+        $("#svcKeyMsg").textContent = j.state === "done" ? (j.key ? t("svc_key_ok", { k: j.key.join(", ") }) : t("svc_key_fail")) : t("svc_job_err", { d: j.error || "?" });
+      }, (j) => { $("#svcKeyMsg").textContent = t("svc_key_prog", { d: j.done || 0, t: j.total || 65536 }); });
+    };
   }
   $("#tabs").addEventListener("click", (e) => { const b = e.target.closest("[data-tab]"); if (b) { S.tab = b.dataset.tab; renderTab(); } });
   async function reread() {

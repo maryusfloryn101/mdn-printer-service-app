@@ -340,6 +340,141 @@ class EpsonSession:
         return {"ok": all(r["ok"] is not False for r in results), "cells": results}
 
 
+# ----------------------------------------------------------------------
+# Unelte de service (citiri suplimentare, contoare separate, întreținere, memorie)
+# ----------------------------------------------------------------------
+COUNTERS = ("main_waste", "borderless_waste", "third_waste", "first_waste", "second_waste")
+
+
+def find_conf_model(model: Optional[str], raw: Optional[str] = None) -> Optional[str]:
+    """Numele de configurație (biblioteca + ez-reset) pentru un model, inclusiv după alias.
+    Folosit pentru modelele care nu au date de resetare, dar au cheie de citire și contoare."""
+    if not model and not raw:
+        return None
+    want = {x.upper().replace(" ", "") for x in (model, raw) if x}
+    want |= {w.replace("SERIES", "") for w in want}
+    confs = dict(_lib().EpsonPrinter.PRINTER_CONFIG) if hasattr(_lib().EpsonPrinter, "PRINTER_CONFIG") else {}
+    confs.update(extra_conf())
+    for name, c in confs.items():
+        names = [name] + list((c or {}).get("alias", []) if isinstance(c, dict) else [])
+        if any(n.upper().replace(" ", "") in want for n in names):
+            return name
+    return None
+
+
+def service_counters(printer) -> list:
+    parm = printer.parm or {}
+    out = []
+    for key in COUNTERS:
+        c = parm.get(key)
+        if isinstance(c, dict) and c.get("oids"):
+            out.append({"key": key, "oids": list(c["oids"])})
+    return out
+
+
+def _session_service_info(self) -> dict:
+    p = self.printer
+    out: Dict[str, object] = {"errors": []}
+
+    def safe(name, fn):
+        try:
+            return fn()
+        except TimeoutError:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            out["errors"].append(f"{name}: {exc}")
+            return None
+
+    out["model_conf"] = self.model
+    out["has_keys"] = bool(p.parm and p.parm.get("read_key"))
+    out["can_write"] = bool(p.parm and p.parm.get("write_key"))
+    out["network"] = self.handle.startswith("net:")
+    out["counters"] = [{"key": c["key"]} for c in service_counters(p)]
+    levels = safe("tampoane", p.get_waste_ink_levels) if p.parm else None
+    for c in out["counters"]:
+        c["level"] = (levels or {}).get(c["key"])
+    out["head_id"] = safe("cap", p.get_printer_head_id) if p.parm else None
+    irc = safe("cerneala", p.get_ink_replacement_counters) if p.parm else None
+    out["ink_replacements"] = [{"color": c, "counter": n, "value": v} for c, n, v in sorted(irc)] if irc else []
+    out["cartridges"] = safe("cartuse", p.get_cartridges)
+    info = safe("info_cartuse", p.get_cartridge_information) or []
+    out["cartridge_info"] = [x if isinstance(x, dict) else str(x) for x in info]
+    stats = safe("contoare", p.get_stats) if p.parm else {}
+    out["poweroff"] = (stats or {}).get("Power off timer")
+    out["poweroff_supported"] = bool(p.parm and "Power off timer" in (p.parm.get("stats") or {}))
+    return out
+
+
+def _session_reset_counter(self, key: str) -> dict:
+    match = [c for c in service_counters(self.printer) if c["key"] == key]
+    if not match:
+        raise RuntimeError("Contorul nu există la acest model.")
+    report: list = []
+    oks = [self.printer.write_eeprom(oid, 0, label="reset_" + key, report=report) for oid in match[0]["oids"]]
+    cells = [{"cell": oid, "before": prev, "after": val, "changed": ch} for oid, prev, val, ch in report]
+    return {"ok": all(bool(x) for x in oks), "cells": cells}
+
+
+def _session_dump(self, start: int, end: int, progress=None) -> Dict[int, Optional[str]]:
+    values: Dict[int, Optional[str]] = {}
+    addrs = list(range(start, end + 1))
+    for i in range(0, len(addrs), 64):
+        part = addrs[i:i + 64]
+        res = self.printer.read_eeprom(part, label="dump")
+        if not isinstance(res, list):
+            res = [res]
+        for a, v in zip(part, res):
+            values[a] = v
+        if progress:
+            progress(min(len(addrs), i + 64), len(addrs))
+    return values
+
+
+def _session_write_cell(self, addr: int, value: int) -> dict:
+    report: list = []
+    before = self.printer.read_eeprom(addr, label="editor")
+    ok = self.printer.write_eeprom(addr, value, label="editor", report=report)
+    after = self.printer.read_eeprom(addr, label="editor")
+    return {"ok": bool(ok), "cell": addr, "before": before, "after": after}
+
+
+def _session_print(self, what: str, power: bool = False) -> dict:
+    p = self.printer
+    if not self.handle.startswith("net:"):
+        raise RuntimeError("network_only")
+    if what == "nozzle":
+        ok = p.print_check_nozzles()
+    elif what == "pattern":
+        ok = p.print_test_color_pattern()
+    elif what == "clean":
+        ok = p.print_clean_nozzles(0, power_clean=power)
+    else:
+        raise ValueError(what)
+    return {"ok": bool(ok)}
+
+
+def _session_poweroff(self, mins: int) -> dict:
+    report: list = []
+    ok = self.printer.write_poweroff_timer(int(mins), report=report)
+    return {"ok": bool(ok)}
+
+
+def _session_find_key(self, progress=None) -> dict:
+    if self.printer.parm is None:
+        self.printer.parm = {}
+    key = self.printer.brute_force_read_key(progress=progress)
+    return {"key": list(key) if key else None}
+
+
+EpsonSession.service_info = _session_service_info
+EpsonSession.reset_counter = _session_reset_counter
+EpsonSession.dump = _session_dump
+EpsonSession.write_cell = _session_write_cell
+EpsonSession.print_service = _session_print
+EpsonSession.set_poweroff = _session_poweroff
+EpsonSession.find_key = _session_find_key
+
+
 def _status_to_json(st: dict) -> dict:
     out = {}
     if not isinstance(st, dict):

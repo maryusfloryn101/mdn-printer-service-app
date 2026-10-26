@@ -249,3 +249,12 @@ button { cursor: pointer; }
 .upd-prog { height: 8px; border-radius: 4px; background: #fff; border: 1px solid var(--green-line); overflow: hidden; max-width: 420px; }
 .upd-prog i { display: block; height: 100%; background: var(--green); transition: width .4s; }
 .upd-box { margin-top: 18px; padding-top: 4px; }
+/* Fila Service */
+.svc-t { width: 100%; border-collapse: collapse; font-size: 13px; margin: 6px 0; }
+.svc-t td, .svc-t th { border-bottom: 1px solid var(--line, #E2E7EC); padding: 8px 6px; text-align: left; vertical-align: middle; }
+.svc-t td.r { text-align: right; }
+.svc-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 6px 0; }
+.svc-row input, .svc-row select { height: 38px; border: 1px solid var(--line, #D5DCE3); border-radius: 8px; padding: 0 10px; font: inherit; }
+.svc-row input[type=number] { width: 110px; }
+.svc-adv { margin-top: 18px; border-top: 1px solid var(--line, #E2E7EC); padding-top: 10px; }
+.svc-adv summary { cursor: pointer; font-weight: 700; }

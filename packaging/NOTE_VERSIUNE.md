@@ -1,1 +1,1 @@
-Modelele Epson cu cutie de întreținere (de ex. L15150, ET-16600) sunt recunoscute: aplicația arată starea cutiei și explică faptul că nu e nevoie de resetare.
+Fila nouă „Service” în fișa imprimantei Epson: resetare separată pe contoare (tampon principal, borderless, al treilea), test duze, pagină de test, curățare cap, informații despre cap și cartușe, timer de oprire automată. Secțiune pentru tehnicieni: export memorie, comparare înainte/după, editor de memorie și detectarea cheii pentru modele necunoscute.
