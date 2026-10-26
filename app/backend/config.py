@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 APP_NAME = "MDN Printer Service"
 VENDOR = "Madena Digital SRL"
 SUPPORT_EMAIL = "service@mdndigital.ro"

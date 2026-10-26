@@ -1,1 +1,1 @@
-Fila nouă „Service” în fișa imprimantei Epson: resetare separată pe contoare (tampon principal, borderless, al treilea), test duze, pagină de test, curățare cap, informații despre cap și cartușe, timer de oprire automată. Secțiune pentru tehnicieni: export memorie, comparare înainte/după, editor de memorie și detectarea cheii pentru modele necunoscute.
+Manualul de utilizare actualizat în cele 12 limbi (fila Service, cutia de întreținere, actualizarea automată).
