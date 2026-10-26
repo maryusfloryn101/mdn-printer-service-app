@@ -15,7 +15,7 @@ else
   RID=$(gh api repos/astral-sh/python-build-standalone/releases/latest --jq .id)
   ASSETS=$(gh api --paginate "repos/astral-sh/python-build-standalone/releases/$RID/assets?per_page=100" --jq '.[].browser_download_url')
   URL=$(echo "$ASSETS" | grep -E 'cpython-3\.12\.[0-9]+\+[0-9]+-x86_64-pc-windows-msvc-install_only(_stripped)?\.tar\.gz$' | sort | tail -1 || true)
-  if [ -z "$URL" ]; then echo "Nu am găsit Python pentru Windows"; echo "$ASSETS" | grep -c . ; exit 1; fi
+  if [ -z "$URL" ]; then echo "Nu am găsit Python pentru Windows"; echo "::error::Python Windows negăsit; fișiere în listă: $(echo "$ASSETS" | grep -c .); exemple: $(echo "$ASSETS" | grep -i "windows" | grep "3\.12" | head -3 | xargs -n1 basename | tr "\n" " ")"; exit 1; fi
   echo "Python: $URL"
   curl -fsSL -o "$B/py.tar.gz" "$URL"
 fi
